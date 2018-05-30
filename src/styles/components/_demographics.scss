@@ -1,0 +1,14 @@
+.demographics {
+  float: left;
+  height: 100%;
+  display: flex;
+  width: 100%;
+}
+
+.demographics:demographics__one {
+  width: 30rem;
+}
+
+.demographics__two {
+  width: 60rem;
+}

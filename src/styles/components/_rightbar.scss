@@ -1,0 +1,10 @@
+.rightbar {
+  background: rgba(256,256,256,0.9);
+  padding: $m-size;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  width: $toolbar;
+  top: $xxl-size;
+  z-index: 998;
+}

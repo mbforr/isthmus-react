@@ -1,0 +1,29 @@
+.header {
+  color: white;
+  padding: $s-size, 0;
+  background: $carto-blue;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  width: $xxl-size;
+  top: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+  z-index: 1000;
+}
+
+.header__icon {
+  background-color: lighten($carto-blue, 10%);
+  border-color: rgba(255,255,255,0.2);
+  border-width: 0.1rem;
+  position: relative;
+  top: $m-size;
+  width: $m-size;
+  height: $m-size;
+  border-radius: 0.4rem;
+  margin: auto;
+  padding: $s-size;
+  background-image: url(../../public/carto.svg);
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: center;
+}

@@ -1,0 +1,19 @@
+.bottombar {
+  color: $reveal-blue;
+  background: white;
+  height: 60%;
+  position: absolute;
+  left: $xxl-size;
+  right: $xxl-size-plus;
+  bottom: 0;
+  z-index: 1000;
+  overflow: scroll;
+}
+
+.bottombar__pad {
+  padding: $m-size;
+}
+
+.bottombar__table {
+
+}

@@ -1,0 +1,36 @@
+.menu {
+  background: rgba(256, 256, 256, 0.7);
+  color: $off-black;
+  margin: $m-size;
+  vertical-align: middle;
+  height: $xxl-size;
+  position: absolute;
+  justify-content: flex-start;
+  margin: auto;
+  left: 0;
+  display: flex;
+  width: 100%;
+  top: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+  z-index: 999;
+}
+
+.menu__title {
+  padding-left: $l-size;
+  padding-right: $l-size;
+}
+
+.menu__item_first {
+  padding-left: $xl-size;
+  padding-right: $xl-size;
+  line-height: $xxl-size !important;
+  border-left: 1px $carto-blue solid;
+  border-right: 1px $carto-blue solid;
+}
+
+.menu__item {
+  padding-left: $xl-size;
+  padding-right: $xl-size;
+  line-height: $xxl-size !important;
+  border-right: 1px $carto-blue solid;
+}
