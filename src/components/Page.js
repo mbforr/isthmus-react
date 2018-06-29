@@ -1,9 +1,11 @@
 import React from 'react';
-import CARTOMap from './CARTOMap';
+import CARTOMapNew from './CARTOMapNew';
+import Header from './Header'
 
 const Page = () => (
   <div>
-    <CARTOMap />
+    <Header />
+    <CARTOMapNew />
   </div>
 );
 

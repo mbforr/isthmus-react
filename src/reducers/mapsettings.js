@@ -1,6 +1,6 @@
 import railLayer from '../data/railLayer';
 import C from '../data/C'
-import carto from 'carto.js';
+import carto from '@carto/carto.js';
 
 const DEFAULT_VIEWPORT = {
   center: [33.753707, -84.389363],

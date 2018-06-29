@@ -8,8 +8,6 @@ import Menu from '../components/Menu';
 const AppRouter = () => (
   <BrowserRouter>
     <div>
-      <Menu />
-      <RightBar />
       <Switch>
         <Route path="/" component={Page} exact={true} />
         <Route component={NotFoundPage} />

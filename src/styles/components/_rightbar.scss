@@ -1,10 +1,27 @@
 .rightbar {
-  background: rgba(256,256,256,0.9);
+  background: #fff;
   padding: $m-size;
-  height: 100%;
   position: absolute;
-  right: 0;
+  display: block;
+  top: $m-size;
+  bottom: $m-size;
+  right: $m-size;
   width: $toolbar;
-  top: $xxl-size;
+  border-radius: 5px;
   z-index: 998;
+  filter: drop-shadow(0px 0px 5px rgba(0,0,0,.33));
 }
+
+
+// .leaflet-container {
+//   display: block;
+//   position: absolute;
+//   top: $m-size;
+//   bottom: $m-size;
+//   right: $m-size;
+//   left: $map-left;
+//   border: none;
+//   // min-height: 100%;
+//   overflow: hidden;
+//   border-radius: 5px;
+// }

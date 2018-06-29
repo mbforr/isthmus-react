@@ -2,75 +2,84 @@ import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import carto from 'carto.js';
+import carto from '@carto/carto.js';
 import { CategoryWidget } from '@carto/airship'
 import Widget from './Widget';
-import { setCategory } from '../../actions/mapsettings';
+import { setNeighbourhoods } from '../../actions/actions';
 
-class Cateogry extends Component {
-
+class Category extends Component {
   // static propTypes = {
-  //   context: PropTypes.shape({
   //     client: PropTypes.object,
   //     layers: PropTypes.object,
-  //     map: PropTypes.object,
-  //   }),
+  //     map: PropTypes.object
   // }
-
-  // state = {
-  //   categories: [],
-  //   selected: [],
-  // }
-
-  getFilters() {
-    const filters = Object.values(this.props.filters).filter(filter => !!filter);
-
-    if (!filters.length) return '';
-
-    return `AND ${filters.join(' AND ')}`;
-  }
-
-  getQuery() {
-    const query = `
-      SELECT
-        railroad as name,
-        count(cartodb_id) as value
-      FROM rail_accidents
-      ${this.getFilters()}
-      GROUP BY railroad
-    `;
-
-    return query.trim();
+  //
+  state = {
+    categories: [],
+    selected: [],
   }
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      ...props
-    }
-
-    const { source } = this.props.rail;
-    const client = this.props.cartoClient
-    const map = this.props.map;
-
-    const sql = source
-    const bboxFilter = new carto.filter.BoundingBoxLeaflet(map);
-
-    this.dataView = new carto.dataview.Category(new carto.source.SQL(sql), 'railroad', {
-      limit: 10,
-      operation: carto.operation.SUM,
-      operationColumn: 'total_damage'
-    });
-    this.dataView.addFilter(bboxFilter);
-    this.dataView.on('dataChanged', this.onDataChanged);
-
-    client.addDataview(this.dataView);
+      this.state = {
+        ...props
+      }
 
   }
 
-  componentWillUnmount() {
-    this.dataView.off('dataChanged');
+
+  componentDidMount() {
+
+
+    const { source } = this.props.layer;
+
+    const sql = source._query
+
+    this.dataView = new carto.dataview.Category(new carto.source.SQL(sql), this.props.column, {
+      limit: 10,
+      operation: this.props.operation,
+      operationColumn: this.props.operationColumn
+    });
+
+
+    this.props.client.addDataview(this.dataView)
+
+    console.log(this.props.boundingbox)
+
+    this.dataView.on('dataChanged', this.onDataChanged);
+
+  }
+
+
+  componentDidUpdate(prevProps) {
+    const bboxFilter = new carto.filter.BoundingBoxLeaflet(this.props.map)
+    // this.dataView.addFilter(this.props.boundingbox);
+    // this.dataView.on('dataChanged', this.onDataChanged);
+
+    if(prevProps.filters !== this.props.filters) {
+      this.dataView.addFilter(this.props.boundingbox);
+      this.dataView.on('dataChanged', this.onDataChanged);
+    }
+
+    if (prevProps.filters.neighbourhoods !== this.props.filters.neighbourhoods) {
+      this.updateLayer();
+    }
+
+  }
+
+  updateLayer() {
+    const { bbox, ...others } = this.props.filters;
+    const { source, query } = this.props.layer;
+
+    const filters = Object.values(others).filter(filter => !!filter);
+
+    const newQuery = filters.length === 0
+      ? query
+      : `${query} WHERE ${filters.join(' AND ')}`;
+
+    source.setQuery(newQuery);
+
+    console.log(newQuery)
   }
 
   onDataChanged = (data) => {
@@ -79,18 +88,16 @@ class Cateogry extends Component {
 
   onCategoryClicked = (selected) => {
     this.setState({ selected });
-    this.props.setCategory(selected);
+    this.props.setNeighbourhoods(selected);
   }
 
   render() {
     const { categories, max, selected } = this.state;
 
-    console.log(this.state)
-
     return (
       <Widget>
         <Widget.Title>Railroad Company</Widget.Title>
-        <Widget.Description>Amount of hosts per neighbourhood.</Widget.Description>
+        <Widget.Description>Total damage in dollars for each comapny</Widget.Description>
 
         <CategoryWidget
           categories={categories}
@@ -104,13 +111,17 @@ class Cateogry extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({
-  rail: state.mapsettings.rail,
-  cartoClient: state.mapsettings.cartoClient
+const mapStateToProps = state => ({
+  client: state.client,
+  map: state.map,
+  filters: state.filters,
+  layers: state.layers,
+  viewport: state.viewport,
+  boundingbox: state.boundingbox
 });
 
 const mapDispatchToProps = dispatch => ({
-  setCategory: selected => dispatch(setCategory(selected)),
+  setNeighbourhoods: selected => dispatch(setNeighbourhoods(selected)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cateogry);
+export default connect(mapStateToProps, mapDispatchToProps)(Category);

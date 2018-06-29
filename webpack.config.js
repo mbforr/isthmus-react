@@ -1,5 +1,7 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// new BundleAnalyzerPlugin()
 
 module.exports = (env) => {
   console.log("env", env)
@@ -45,6 +47,7 @@ module.exports = (env) => {
       }]
     },
     plugins: [
+      new BundleAnalyzerPlugin({analyzerPort: 9000}),
       CSSExtract
     ],
     devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',

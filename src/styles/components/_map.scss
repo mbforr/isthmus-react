@@ -1,7 +1,13 @@
 .leaflet-container {
   display: block;
   position: absolute;
-  width: 100%;
+  top: $m-size;
+  bottom: $m-size;
+  right: $toolbar-pad;
+  left: $map-left;
   border: none;
-  height: 100%;
+  // min-height: 100%;
+  overflow: hidden;
+  border-radius: 5px;
+  filter: drop-shadow(0px 0px 5px rgba(0,0,0,.33));
 }

@@ -1,5 +1,6 @@
-import { createStore, combineReducers } from 'redux';
-import mapsettingsReducer from '../reducers/mapsettings';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import * as reducers from '../reducers/reducers';
+import logger from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
@@ -8,27 +9,14 @@ const persistConfig = {
   storage,
 }
 
-const persistedReducer = persistReducer(persistConfig, combineReducers({mapsettings: mapsettingsReducer}))
-
+const persistedReducer = persistReducer(persistConfig, combineReducers(reducers))
 
 export default () => {
   let store = createStore(
 
     persistedReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    applyMiddleware(logger)
   )
   let persistor = persistStore(store)
   return { store, persistor }
 }
-
-// export default
-//
-//   const store = createStore(
-//     persistReducer,
-//
-//
-//   );
-//   let persistor = persistStore(store)
-//
-//   return {store,persistor};
-// };

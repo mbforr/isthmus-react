@@ -4,46 +4,81 @@ import L from 'leaflet';
 import carto from '@carto/carto.js';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { storeLayers, setMap, setBboxFilter } from './actions';
-import { Widgets, Legend, AirbnbPopup, MobileTabs } from './components';
-import layers from './layers';
+import { storeLayers, setMap, setBboxFilter, changeViewport, changeCartoBBox } from '../actions/actions';
+// import { Widgets, Legend, AirbnbPopup, MobileTabs } from '../components/components';
+import RightBar from '../components/RightBar'
+import layers from '../data/layers';
 import C from '../data/C'
-import './index.css';
+
+// import './index.css';
 
 const { BASEMAP, BASEMAP_LABELS, CENTER, ZOOM } = C;
 
 class CARTOMapNew extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      ...props
+    }
+  }
+
   componentDidMount() {
-    const map = L.map('map', { zoomControl: false, maxZoom: 18 }).setView(CENTER, ZOOM);
+
+    // look into adding the map up above
+
+    const map = L.map('map', { zoomControl: false, maxZoom: 18 }).setView(this.props.viewport.center, this.props.viewport.zoom);
+
+    this.props.setMap(map);
 
     L.tileLayer(BASEMAP).addTo(map);
+
     // L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
     // this.popup = L.popup({ closeButton: false });
 
-    this.setBbbox(map.getBounds());
+    // this.setBbbox(map.getBounds());
+
+    const bboxFilter = new carto.filter.BoundingBoxLeaflet(map);
+    this.props.changeCartoBBox(bboxFilter);
 
     map.on('moveend', event => {
       const boundingBox = event.target.getBounds();
-      this.setBbbox(boundingBox);
+      const newCenter = event.target.getCenter();
+      const newZoom = event.target.getZoom();
+      const newViewport = {
+        center: newCenter,
+        zoom: newZoom
+      }
+
+      // const newCenter = event.target.getCenter();
+      // const newZoom = event.target.getZoom();
+      // const xmin = boundingBox._northEast.lat
+      // const ymin = boundingBox._northEast.lng
+      // const xmax = boundingBox._southWest.lat
+      // const ymax = boundingBox._southWest.lng
+      //
+      // const boundingWebmercator = `ST_Intersects(the_geom_webmercator, ST_Transform(ST_MakeEnvelope(${xmin}, ${ymin}, ${xmax}, ${ymax}, 4326), 3857))`
+      //
+      // const newViewport = {
+      //   center: newCenter,
+      //   zoom: newZoom,
+      //   bbox: boundingWebmercator
+      // }
+
+
+      this.props.setBboxFilter([
+        boundingBox._northEast.lat,
+        boundingBox._northEast.lng,
+        boundingBox._southWest.lat,
+        boundingBox._southWest.lng
+      ])
+
+      this.props.changeViewport(newViewport);
     });
 
-    this.props.setMap(map);
-  }
 
-  componentDidUpdate(prevProps) {
-    if (!prevProps.map && this.props.map) {
-      this.setupLayers();
-    }
-  }
 
-  setBbbox(bbox) {
-    this.props.setBboxFilter([
-      bbox.getSouthWest().lng,
-      bbox.getSouthWest().lat,
-      bbox.getNorthEast().lng,
-      bbox.getNorthEast().lat,
-    ]);
   }
 
   setupLayers() {
@@ -63,13 +98,19 @@ class CARTOMapNew extends Component {
       return { ...all, [layerName]: { source, style, layer, ...other } };
     }, {});
 
-    // Add all layers at the same tame so it doesn't reload multiple times
+    // Add all layers at the same time so it doesn't reload multiple times
     this.props.client.addLayers(Object.values(cartoLayers).map(item => item.layer));
 
     // Labels need to be added after the layers
     L.tileLayer(BASEMAP_LABELS).addTo(this.props.map);
 
     this.props.storeLayers(cartoLayers)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.map && this.props.map) {
+      this.setupLayers();
+    }
   }
 
   openPopup(featureEvent) {
@@ -83,26 +124,18 @@ class CARTOMapNew extends Component {
   }
 
   render() {
-    const { theme, layers } = this.props;
+    const { layers } = this.props;
     const hasLayers = Object.keys(layers).length > 0;
 
     return (
-      <ThemeProvider theme={theme}>
+      //check to see if this can be done with a react leaflet component
         <main>
-          <div id="map" />
-          {hasLayers && (
-            <React.Fragment>
-              <ShowOnlyMobile>
-                <MobileTabs />
-              </ShowOnlyMobile>
-              <HideMobile>
-                <Legend />
-              </HideMobile>
-              <Widgets />
-            </React.Fragment>
-          )}
+
+          <div id="map">
+          </div>
+          <RightBar />
         </main>
-      </ThemeProvider>
+
     );
   }
 }
@@ -110,13 +143,17 @@ class CARTOMapNew extends Component {
 const mapStateToProps = state => ({
   client: state.client,
   map: state.map,
-  layers: state.layers
+  layers: state.layers,
+  viewport: state.viewport,
+  boundingbox: state.boundingbox
 });
 
 const mapDispatchToProps = dispatch => ({
   storeLayers: layers => dispatch(storeLayers(layers)),
   setMap: map => dispatch(setMap(map)),
   setBboxFilter: bbox => dispatch(setBboxFilter(bbox)),
+  changeViewport: viewport => dispatch(changeViewport(viewport)),
+  changeCartoBBox: boundingbox => dispatch(changeCartoBBox(boundingbox))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CARTOMapNew);

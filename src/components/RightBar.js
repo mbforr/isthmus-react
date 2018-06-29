@@ -1,23 +1,36 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import carto from 'carto.js';
 import { connect } from 'react-redux';
+import { setNeighbourhoods } from '../actions/actions';
+import carto from '@carto/carto.js';
+
 
 import Category from './widgets/Category'
 
 class RightBar extends Component {
 
-  cartoClient = new carto.Client({ apiKey: '665b6d21a3b9c20906057414b7da378b519df141', username: 'mforrest'});
-
   render() {
     return (
       <div className="rightbar">
-        <h1>Analyze</h1>
-        <Category />
+        <Category
+          layer={ this.props.layers.railaccidents }
+          limit={10}
+          operation={ carto.operation.SUM }
+          operationColumn='total_damage'
+          column='railroad'
+        />
       </div>
 
     )
   }
 }
 
-export default RightBar;
+const mapStateToProps = state => ({
+  layers: state.layers
+});
+
+const mapDispatchToProps = dispatch => ({
+  setNeighbourhoods: selected => dispatch(setNeighbourhoods(selected)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(RightBar);
