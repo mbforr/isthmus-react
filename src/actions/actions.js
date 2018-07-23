@@ -23,7 +23,6 @@ export const changeCartoBBox = boundingbox => ({
 });
 
 
-
 export const SET_PRICE = '@Filters/SET_PRICE';
 export const setPriceFilter = filter => ({
   type: SET_PRICE,

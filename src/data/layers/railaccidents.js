@@ -20,6 +20,6 @@ export default {
   `,
 
   options: {
-    featureClickColumns: ['cartodb_id', 'railroad', 'total_damage']
+    featureClickColumns: ['cartodb_id', 'railroad', 'total_damage', 'cause', 'weather', 'accident_type', 'image']
   }
 };

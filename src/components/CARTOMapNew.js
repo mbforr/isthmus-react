@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import L from 'leaflet';
-import carto from '@carto/carto.js';
+import carto, { filter, source, style, layer  } from '@carto/carto.js';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { storeLayers, setMap, setBboxFilter, changeViewport, changeCartoBBox } from '../actions/actions';
 // import { Widgets, Legend, AirbnbPopup, MobileTabs } from '../components/components';
 import RightBar from '../components/RightBar'
+import InfoWindow from '../components/InfoWindow'
 import layers from '../data/layers';
 import C from '../data/C'
 
@@ -35,7 +36,7 @@ class CARTOMapNew extends Component {
 
     // L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
-    // this.popup = L.popup({ closeButton: false });
+    this.popup = L.popup({ closeButton: false });
 
     // this.setBbbox(map.getBounds());
 
@@ -50,22 +51,6 @@ class CARTOMapNew extends Component {
         center: newCenter,
         zoom: newZoom
       }
-
-      // const newCenter = event.target.getCenter();
-      // const newZoom = event.target.getZoom();
-      // const xmin = boundingBox._northEast.lat
-      // const ymin = boundingBox._northEast.lng
-      // const xmax = boundingBox._southWest.lat
-      // const ymax = boundingBox._southWest.lng
-      //
-      // const boundingWebmercator = `ST_Intersects(the_geom_webmercator, ST_Transform(ST_MakeEnvelope(${xmin}, ${ymin}, ${xmax}, ${ymax}, 4326), 3857))`
-      //
-      // const newViewport = {
-      //   center: newCenter,
-      //   zoom: newZoom,
-      //   bbox: boundingWebmercator
-      // }
-
 
       this.props.setBboxFilter([
         boundingBox._northEast.lat,
@@ -119,7 +104,7 @@ class CARTOMapNew extends Component {
 
     if (!this.popup.isOpen()) {
       this.popup.openOn(this.props.map);
-      render(<AirbnbPopup {...featureEvent.data} />, this.popup._contentNode);
+      render(<InfoWindow {...featureEvent.data} />, this.popup._contentNode);
     }
   }
 

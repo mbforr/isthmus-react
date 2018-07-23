@@ -12,3 +12,32 @@ body {
   height: 100%;
   min-height: 100% !important;
 }
+
+.leaflet-popup-content p {
+  margin: 0;
+}
+
+.leaflet-popup {
+  bottom: 5px !important;
+  left: -2px !important;
+}
+
+.leaflet-container {
+  flex: 1;
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  line-height: normal;
+}
+
+.leaflet-popup-content-wrapper {
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.leaflet-popup-tip-container {
+  display: none;
+}
