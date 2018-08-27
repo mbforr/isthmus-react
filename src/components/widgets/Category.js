@@ -3,112 +3,58 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import carto from '@carto/carto.js';
-import { CategoryWidget } from '@carto/airship'
-import Widget from './Widget';
-import { setNeighbourhoods } from '../../actions/actions';
+
 
 class Category extends Component {
-  // static propTypes = {
-  //     client: PropTypes.object,
-  //     layers: PropTypes.object,
-  //     map: PropTypes.object
-  // }
-  //
-  state = {
+
+  static defaultProps = {
     categories: [],
-    selected: [],
+    showHeader: true,
+    showClearButton: true,
+    useTotalPercentage: false,
+    visibleCategories: Infinity,
   }
-
-  constructor(props) {
-    super(props);
-      this.state = {
-        ...props
-      }
-
-  }
-
 
   componentDidMount() {
-
-
-    const { source } = this.props.layer;
-
-    const sql = source._query
-
-    this.dataView = new carto.dataview.Category(new carto.source.SQL(sql), this.props.column, {
-      limit: 10,
-      operation: this.props.operation,
-      operationColumn: this.props.operationColumn
-    });
-
-
-    this.props.client.addDataview(this.dataView)
-
-    console.log(this.props.boundingbox)
-
-    this.dataView.on('dataChanged', this.onDataChanged);
-
+    this._setupConfig();
+    this._setupEvents();
   }
 
-
-  componentDidUpdate(prevProps) {
-    const bboxFilter = new carto.filter.BoundingBoxLeaflet(this.props.map)
-    // this.dataView.addFilter(this.props.boundingbox);
-    // this.dataView.on('dataChanged', this.onDataChanged);
-
-    if(prevProps.filters !== this.props.filters) {
-      this.dataView.addFilter(this.props.boundingbox);
-      this.dataView.on('dataChanged', this.onDataChanged);
-    }
-
-    if (prevProps.filters.neighbourhoods !== this.props.filters.neighbourhoods) {
-      this.updateLayer();
-    }
-
+  componentDidUpdate() {
+    this._setupConfig();
   }
 
-  updateLayer() {
-    const { bbox, ...others } = this.props.filters;
-    const { source, query } = this.props.layer;
+  _setupConfig() {
+    const { categories, showHeader, showClearButton, useTotalPercentage, visibleCategories } = this.props;
 
-    const filters = Object.values(others).filter(filter => !!filter);
-
-    const newQuery = filters.length === 0
-      ? query
-      : `${query} WHERE ${filters.join(' AND ')}`;
-
-    source.setQuery(newQuery);
-
-    console.log(newQuery)
+    this.widget.showHeader = showHeader;
+    this.widget.showClearButton = showClearButton;
+    this.widget.useTotalPercentage = useTotalPercentage;
+    this.widget.visibleCategories = visibleCategories;
+    this.widget.categories = categories;
   }
 
-  onDataChanged = (data) => {
-    this.setState(data);
+  _setupEvents() {
+    this.widget.addEventListener('categoriesSelected', event => this._onSelectedChanged(event));
   }
 
-  onCategoryClicked = (selected) => {
-    this.setState({ selected });
-    this.props.setNeighbourhoods(selected);
+  _onSelectedChanged(event) {
+    const { onSelectedChanged } = this.props;
+    onSelectedChanged && onSelectedChanged(event);
   }
 
   render() {
-    const { categories, max, selected } = this.state;
+    const { heading, description } = this.props;
 
     return (
-      <Widget>
-        <Widget.Title>Railroad Company</Widget.Title>
-        <Widget.Description>Total damage in dollars for each comapny</Widget.Description>
-
-        <CategoryWidget
-          categories={categories}
-          max={max}
-          color={'#3AB5F0'}
-          onCategoryClick={this.onCategoryClicked}
-          selected={selected}
-        />
-      </Widget>
+      <as-category-widget
+        ref={node => { this.widget = node; }}
+        heading={heading}
+        description={description}
+      />
     );
   }
+
 }
 
 const mapStateToProps = state => ({

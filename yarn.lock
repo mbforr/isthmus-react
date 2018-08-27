@@ -17,6 +17,14 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@carto/airship-icons@^1.0.0-alpha-27.0":
+  version "1.0.0-alpha-27.0"
+  resolved "https://registry.yarnpkg.com/@carto/airship-icons/-/airship-icons-1.0.0-alpha-27.0.tgz#57ee972df4aa592ccd3b4e263012417ef5baf4e8"
+
+"@carto/airship-style@1.0.0-alpha.37":
+  version "1.0.0-alpha.37"
+  resolved "https://registry.yarnpkg.com/@carto/airship-style/-/airship-style-1.0.0-alpha.37.tgz#cf43233ce4aae5bc105e5155cd29aceb5a9acafb"
+
 "@carto/airship@^1.0.0-alpha.14":
   version "1.0.0-alpha.25"
   resolved "https://registry.yarnpkg.com/@carto/airship/-/airship-1.0.0-alpha.25.tgz#e708cab9b8c31418f7f905702e8806de922fedf1"

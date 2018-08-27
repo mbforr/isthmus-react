@@ -6,10 +6,10 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { storeLayers, setMap, setBboxFilter, changeViewport, changeCartoBBox } from '../actions/actions';
 // import { Widgets, Legend, AirbnbPopup, MobileTabs } from '../components/components';
-import RightBar from '../components/RightBar'
 import InfoWindow from '../components/InfoWindow'
 import layers from '../data/layers';
 import C from '../data/C'
+import airship from '@carto/airship-style'
 
 // import './index.css';
 
@@ -113,14 +113,9 @@ class CARTOMapNew extends Component {
     const hasLayers = Object.keys(layers).length > 0;
 
     return (
-      //check to see if this can be done with a react leaflet component
-        <main>
-
-          <div id="map">
-          </div>
-          <RightBar />
-        </main>
-
+      <div>
+        <div id="map"></div>
+      </div>
     );
   }
 }
