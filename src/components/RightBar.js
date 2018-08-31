@@ -22,88 +22,75 @@ class RightBar extends Component {
 
   }
 
-  componentDidMount() {
-    this._addDataview();
-  }
-
-
-
-  _addDataview() {
-    this.dataView = new carto.dataview.Category(this.props.layers.railaccidents.source, 'railroad', {
-      limit: 10,
-      operation: carto.operation.SUM,
-      operationColumn: 'total_damage',
-    });
-
-    this.dataView.on('dataChanged', ({ categories }) => this.setState({ categories }));
-
-    // categoryDataview.addFilter(this.props.boundingbox);
-
-    this.props.client.addDataview(this.dataView);
- }
-
-
- componentDidUpdate(prevProps) {
-   const bboxFilter = new carto.filter.BoundingBoxLeaflet(this.props.map)
-   // this.dataView.addFilter(this.props.boundingbox);
-   // this.dataView.on('dataChanged', this.onDataChanged);
-
-   if(prevProps !== this.props) {
-     this.dataView.addFilter(this.props.boundingbox);
-   }
-
- }
-
-  _createFilter() {
-    const filter = new carto.filter.Category('railroad', { in: this.state.selection });
-    this.props.layers.railaccidents.source.addFilter(filter);
-    this.setState({  filter });
-  }
-
-  _updateFilter() {
-    this.filter.setFilters({ in: this.state.selection });
-  }
-
-  onSelectedChanged = ({ detail }) => {
-    let { filter } = this.state;
-
-    if (filter && !detail.length) {
-      this.props.layers.railaccidents.source.removeFilter(filter);
-      filter = null;
-    }
-
-    this.setState({ selection: detail, filter });
-  }
-
-  onApplySelection = () => {
-    const { filter, selection } = this.state;
-
-    selection.length > 0 && !filter
-      ? this._createFilter()
-      : this._updateFilter();
-  }
+ //  componentDidMount() {
+ //    this._addDataview();
+ //  }
+ //
+ //
+ //
+ //  _addDataview() {
+ //    this.dataView = new carto.dataview.Category(this.props.layers.railaccidents.source, 'railroad', {
+ //      limit: 10,
+ //      operation: carto.operation.SUM,
+ //      operationColumn: 'total_damage',
+ //    });
+ //
+ //    this.dataView.on('dataChanged', ({ categories }) => this.setState({ categories }));
+ //    this.props.client.addDataview(this.dataView);
+ // }
+ //
+ //
+ //   componentDidUpdate(prevProps) {
+ //     const bboxFilter = new carto.filter.BoundingBoxLeaflet(this.props.map)
+ //     // this.dataView.addFilter(this.props.boundingbox);
+ //     // this.dataView.on('dataChanged', this.onDataChanged);
+ //
+ //     if(prevProps !== this.props) {
+ //       this.dataView.addFilter(this.props.boundingbox);
+ //     }
+ //
+ //   }
+ //
+ //  _createFilter() {
+ //    const filter = new carto.filter.Category('railroad', { in: this.state.selection });
+ //    this.props.layers.railaccidents.source.addFilter(filter);
+ //    this.setState({  filter });
+ //  }
+ //
+ //  _updateFilter() {
+ //    this.filter.setFilters({ in: this.state.selection });
+ //  }
+ //
+ //  onSelectedChanged = ({ detail }) => {
+ //    let { filter } = this.state;
+ //
+ //    if (filter && !detail.length) {
+ //      this.props.layers.railaccidents.source.removeFilter(filter);
+ //      filter = null;
+ //    }
+ //
+ //    this.setState({ selection: detail, filter });
+ //  }
+ //
+ //  onApplySelection = () => {
+ //    const { filter, selection } = this.state;
+ //
+ //    selection.length > 0 && !filter
+ //      ? this._createFilter()
+ //      : this._updateFilter();
+ //  }
 
   render() {
     const { categories, filter, selection } = this.state;
-    const showApplyButton = selection.length > 0 && !filter;
+
 
     return (
       <div>
       <Category
-                    heading="Business Volume"
-                    description="Description"
-                    categories={categories}
-                    onSelectedChanged={this.onSelectedChanged}
-                    showClearButton={!!filter}
-                  />
-                  { showApplyButton && (
-                    <div className="as-flex as-justify-end as-mt--8">
-                      <button className="as-btn as-btn--s as-btn--primary" onClick={this.onApplySelection}>
-                        Apply selection
-                      </button>
-                    </div>
-                  )}
-                  </div>
+        heading="Business Volume"
+        description="Description"
+      />
+      </div>
     )
   }
 }
