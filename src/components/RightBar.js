@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import { setNeighbourhoods } from '../actions/actions';
-import carto from '@carto/carto.js';
+import carto, { filter, source, style, layer  } from '@carto/carto.js';
 import Category from './widgets/Category'
 import airship from '@carto/airship-style'
 
@@ -26,28 +26,37 @@ class RightBar extends Component {
     this._addDataview();
   }
 
+
+
   _addDataview() {
-    // const bboxFilter = new carto.filter.BoundingBoxLeaflet(this.map);
-    console.log(this.props.layers.railaccidents.source)
-    const categoryDataview = new carto.dataview.Category(this.props.layers.railaccidents.source, 'railroad', {
+    this.dataView = new carto.dataview.Category(this.props.layers.railaccidents.source, 'railroad', {
       limit: 10,
       operation: carto.operation.SUM,
       operationColumn: 'total_damage',
     });
 
-    console.log(categoryDataview)
+    this.dataView.on('dataChanged', ({ categories }) => this.setState({ categories }));
 
-    console.log(this.props.categories)
+    // categoryDataview.addFilter(this.props.boundingbox);
 
-    categoryDataview.on('dataChanged', ({ categories }) => this.setState({ categories }));
+    this.props.client.addDataview(this.dataView);
+ }
 
-    //categoryDataview.addFilter(bboxFilter);
-    this.props.client.addDataview(categoryDataview);
+
+ componentDidUpdate(prevProps) {
+   const bboxFilter = new carto.filter.BoundingBoxLeaflet(this.props.map)
+   // this.dataView.addFilter(this.props.boundingbox);
+   // this.dataView.on('dataChanged', this.onDataChanged);
+
+   if(prevProps !== this.props) {
+     this.dataView.addFilter(this.props.boundingbox);
+   }
+
  }
 
   _createFilter() {
     const filter = new carto.filter.Category('railroad', { in: this.state.selection });
-    this.source.addFilter(filter);
+    this.props.layers.railaccidents.source.addFilter(filter);
     this.setState({  filter });
   }
 
@@ -59,7 +68,7 @@ class RightBar extends Component {
     let { filter } = this.state;
 
     if (filter && !detail.length) {
-      this.source.removeFilter(filter);
+      this.props.layers.railaccidents.source.removeFilter(filter);
       filter = null;
     }
 
@@ -79,11 +88,22 @@ class RightBar extends Component {
     const showApplyButton = selection.length > 0 && !filter;
 
     return (
-      <as-category-widget
-        class="as-p--16"
-        heading="Business Volume"
-        description="Description"
-        default-bar-color="#47DB99"></as-category-widget>
+      <div>
+      <Category
+                    heading="Business Volume"
+                    description="Description"
+                    categories={categories}
+                    onSelectedChanged={this.onSelectedChanged}
+                    showClearButton={!!filter}
+                  />
+                  { showApplyButton && (
+                    <div className="as-flex as-justify-end as-mt--8">
+                      <button className="as-btn as-btn--s as-btn--primary" onClick={this.onApplySelection}>
+                        Apply selection
+                      </button>
+                    </div>
+                  )}
+                  </div>
     )
   }
 }

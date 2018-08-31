@@ -44,10 +44,10 @@
     react-emotion "^9.0.1"
 
 "@carto/carto.js@^4.0.8":
-  version "4.0.8"
-  resolved "https://registry.yarnpkg.com/@carto/carto.js/-/carto.js-4.0.8.tgz#e6e661ffbfb0a33a885aaaf7ad86fdc729e97c63"
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/@carto/carto.js/-/carto.js-4.1.3.tgz#26aecb1dac88e27987d1a81c2f6d48c34cd920a9"
   dependencies:
-    "@carto/zera" "1.0.6"
+    "@carto/zera" "1.0.7"
     backbone "1.2.3"
     backbone-poller "^1.1.3"
     browserify-shim "3.8.12"
@@ -66,9 +66,9 @@
     underscore "1.8.3"
     whatwg-fetch "^2.0.3"
 
-"@carto/zera@1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@carto/zera/-/zera-1.0.6.tgz#6f5526e5c46508a6f878f3da60403bc1ccebb45c"
+"@carto/zera@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@carto/zera/-/zera-1.0.7.tgz#2d9a2d5971058daa4449a75e006d43d61d89e0f2"
 
 "@emotion/hash@^0.6.2":
   version "0.6.3"
@@ -140,7 +140,11 @@ acorn@^5.0.0:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.1.1.tgz#53fe161111f912ab999ee887a90a0bc52822fd75"
 
-acorn@^5.2.1, acorn@^5.3.0:
+acorn@^5.2.1:
+  version "5.7.2"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.2.tgz#91fa871883485d06708800318404e72bfb26dcc5"
+
+acorn@^5.3.0:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.1.tgz#f095829297706a7c9776958c0afc8930a9b9d9d8"
 
@@ -1497,8 +1501,9 @@ caniuse-lite@^1.0.30000684:
   version "1.0.30000693"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000693.tgz#c9c6298697c71fdf6cb13eefe8aa93926f2f8613"
 
-carto@cartodb/carto#master:
+carto@cartodb/carto#master, "carto@github:cartodb/carto#master":
   version "0.15.1"
+  uid "31abb8bee02df605521247b0223d508320f7d4c8"
   resolved "https://codeload.github.com/cartodb/carto/tar.gz/31abb8bee02df605521247b0223d508320f7d4c8"
   dependencies:
     mapnik-reference "~6.0.2"
@@ -2127,8 +2132,8 @@ d3-time-format@2.1.0:
     d3-time "1"
 
 d3-time@1:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/d3-time/-/d3-time-1.0.8.tgz#dbd2d6007bf416fe67a76d17947b784bffea1e84"
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/d3-time/-/d3-time-1.0.10.tgz#8259dd71288d72eeacfd8de281c4bf5c7393053c"
 
 d3-timer@1:
   version "1.0.7"
@@ -4171,9 +4176,13 @@ jquery@2.1.4:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.1.4.tgz#228bde698a0c61431dc2630a6a154f15890d2317"
 
-js-base64@^2.1.8, js-base64@^2.1.9:
+js-base64@^2.1.8:
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.1.9.tgz#f0e80ae039a4bd654b5f281fc93f04a914a7fcce"
+
+js-base64@^2.1.9:
+  version "2.4.9"
+  resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.9.tgz#748911fb04f48a60c4771b375cac45a80df11c03"
 
 js-tokens@^3.0.0:
   version "3.0.1"
@@ -6832,9 +6841,9 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-torque.js@CartoDB/torque#master:
+"torque.js@github:cartodb/torque#master":
   version "2.16.5"
-  resolved "https://codeload.github.com/CartoDB/torque/tar.gz/ce414701abb61847d9ddc5830d83c5a3a9d655b2"
+  resolved "https://codeload.github.com/cartodb/torque/tar.gz/ce414701abb61847d9ddc5830d83c5a3a9d655b2"
   dependencies:
     carto cartodb/carto#master
     d3 "3.5.17"

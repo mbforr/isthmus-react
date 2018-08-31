@@ -32,6 +32,7 @@ class Category extends Component {
     this.widget.useTotalPercentage = useTotalPercentage;
     this.widget.visibleCategories = visibleCategories;
     this.widget.categories = categories;
+
   }
 
   _setupEvents() {
