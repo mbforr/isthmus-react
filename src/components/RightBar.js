@@ -14,9 +14,6 @@ class RightBar extends Component {
   constructor(props) {
     super(props);
       this.state = {
-        categories: [],
-        selection: [],
-        filter: null,
         ...props
       }
 

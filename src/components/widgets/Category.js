@@ -8,14 +8,18 @@ import carto from '@carto/carto.js';
 class Category extends Component {
 
   static defaultProps = {
-    categories: [],
-    selection: [],
-    filter: null,
     showHeader: true,
     showClearButton: true,
     useTotalPercentage: false,
     visibleCategories: Infinity,
-  }
+  };
+
+  state = {
+    categories: [],
+    selection: [],
+    filter: null,
+  };
+
 
   componentDidMount() {
     this._setupConfig();
@@ -23,13 +27,26 @@ class Category extends Component {
     this._addDataview();
   }
 
-  componentDidUpdate() {
+  // componentDidUpdate() {
+  //   this._setupConfig();
+  // }
+
+  componentDidUpdate(prevProps) {
     this._setupConfig();
+    const bboxFilter = new carto.filter.BoundingBoxLeaflet(this.props.map)
+    // this.dataView.addFilter(this.props.boundingbox);
+    // this.dataView.on('dataChanged', this.onDataChanged);
+
+    if(prevProps !== this.props) {
+      this.dataView.addFilter(this.props.boundingbox);
+    }
+
   }
 
   _setupConfig() {
-    const { categories, showHeader, showClearButton, useTotalPercentage, visibleCategories } = this.props;
-
+    //this works fine
+    const { showHeader, showClearButton, useTotalPercentage, visibleCategories } = this.props;
+    const { categories } = this.state;
     this.widget.showHeader = showHeader;
     this.widget.showClearButton = showClearButton;
     this.widget.useTotalPercentage = useTotalPercentage;
@@ -53,45 +70,34 @@ class Category extends Component {
     this.props.client.addDataview(this.dataView);
  }
 
- componentDidUpdate(prevProps) {
-   const bboxFilter = new carto.filter.BoundingBoxLeaflet(this.props.map)
-   // this.dataView.addFilter(this.props.boundingbox);
-   // this.dataView.on('dataChanged', this.onDataChanged);
-
-   if(prevProps !== this.props) {
-     this.dataView.addFilter(this.props.boundingbox);
-   }
-
- }
-
-_createFilter() {
-  const filter = new carto.filter.Category('railroad', { in: this.state.selection });
-  this.props.layers.railaccidents.source.addFilter(filter);
-  this.setState({  filter });
-}
-
-_updateFilter() {
-  this.filter.setFilters({ in: this.state.selection });
-}
-
-onSelectedChanged = ({ detail }) => {
-  let { filter } = this.state;
-
-  if (filter && !detail.length) {
-    this.props.layers.railaccidents.source.removeFilter(filter);
-    filter = null;
+  _createFilter() {
+    const filter = new carto.filter.Category('railroad', { in: this.state.selection });
+    this.props.layers.railaccidents.source.addFilter(filter);
+    this.setState({  filter });
   }
 
-  this.setState({ selection: detail, filter });
-}
+  _updateFilter() {
+    this.filter.setFilters({ in: this.state.selection });
+  }
 
-onApplySelection = () => {
-  const { filter, selection } = this.state;
+  onSelectedChanged = ({ detail }) => {
+    let { filter } = this.state;
 
-  selection.length > 0 && !filter
-    ? this._createFilter()
-    : this._updateFilter();
-}
+    if (filter && !detail.length) {
+      this.props.layers.railaccidents.source.removeFilter(filter);
+      filter = null;
+    }
+
+    this.setState({ selection: detail, filter });
+  }
+
+  onApplySelection = () => {
+    const { filter, selection } = this.state;
+
+    selection.length > 0 && !filter
+      ? this._createFilter()
+      : this._updateFilter();
+  }
 
   _onSelectedChanged(event) {
     const { onSelectedChanged } = this.props;
@@ -100,7 +106,9 @@ onApplySelection = () => {
 
   render() {
     const { heading, description } = this.props;
-    const { categories, filter, selection } = this.props;
+    const { categories, filter, selection } = this.state;
+
+    console.log(this.props)
     const showApplyButton = selection.length > 0 && !filter;
 
     return (

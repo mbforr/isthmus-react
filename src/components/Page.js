@@ -24,7 +24,7 @@ const Page = () => (
 
 
     <aside className="as-sidebar--l as-sidebar--right">
-      <div class="as-container as-m--16">
+      <div className="as-container as-m--16">
         <RightBar />
       </div>
     </aside>
