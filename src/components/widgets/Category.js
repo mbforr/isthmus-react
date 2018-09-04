@@ -55,10 +55,10 @@ class Category extends Component {
 
   }
   _addDataview() {
-    this.dataView = new carto.dataview.Category(this.props.layers.railaccidents.source, 'railroad', {
+    this.dataView = new carto.dataview.Category(this.props.categoryLayer, this.props.column, {
       limit: 10,
-      operation: carto.operation.SUM,
-      operationColumn: 'total_damage',
+      operation: this.props.operation,
+      operationColumn: this.props.operationColumn
     });
 
     this.dataView.on('dataChanged', ({ categories }) => this.setState({ categories }));
@@ -67,8 +67,8 @@ class Category extends Component {
 
   _createFilter() {
     console.log('_createFilter RAN')
-    const filter = new carto.filter.Category('railroad', { in: this.state.selection });
-    this.props.layers.railaccidents.source.addFilter(filter);
+    const filter = new carto.filter.Category(this.props.column, { in: this.state.selection });
+    this.props.categoryLayer.addFilter(filter);
     this.setState({  filter });
   }
 
@@ -82,7 +82,7 @@ class Category extends Component {
     console.log('onSelectedChanged: ', filter)
 
     if (filter && !detail.length) {
-      this.props.layers.railaccidents.source.removeFilter(filter);
+      this.props.categoryLayer.removeFilter(filter);
       filter = null;
     }
 
