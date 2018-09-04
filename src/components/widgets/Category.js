@@ -17,7 +17,7 @@ class Category extends Component {
   state = {
     categories: [],
     selection: [],
-    filter: null,
+    filter: null
   };
 
 
@@ -54,11 +54,6 @@ class Category extends Component {
     this.widget.categories = categories;
 
   }
-
-  _setupEvents() {
-    this.widget.addEventListener('categoriesSelected', event => this._onSelectedChanged(event));
-  }
-
   _addDataview() {
     this.dataView = new carto.dataview.Category(this.props.layers.railaccidents.source, 'railroad', {
       limit: 10,
@@ -71,17 +66,20 @@ class Category extends Component {
  }
 
   _createFilter() {
+    console.log('_createFilter RAN')
     const filter = new carto.filter.Category('railroad', { in: this.state.selection });
     this.props.layers.railaccidents.source.addFilter(filter);
     this.setState({  filter });
   }
 
   _updateFilter() {
+    console.log('_updateFilter RAN')
     this.filter.setFilters({ in: this.state.selection });
   }
 
   onSelectedChanged = ({ detail }) => {
     let { filter } = this.state;
+    console.log('onSelectedChanged: ', filter)
 
     if (filter && !detail.length) {
       this.props.layers.railaccidents.source.removeFilter(filter);
@@ -100,15 +98,21 @@ class Category extends Component {
   }
 
   _onSelectedChanged(event) {
-    const { onSelectedChanged } = this.props;
+    const { onSelectedChanged } = this;
     onSelectedChanged && onSelectedChanged(event);
   }
+
+  _setupEvents() {
+    this.widget.addEventListener('categoriesSelected', event => this._onSelectedChanged(event));
+  }
+
 
   render() {
     const { heading, description } = this.props;
     const { categories, filter, selection } = this.state;
 
-    console.log(this.props)
+    //console.log()
+
     const showApplyButton = selection.length > 0 && !filter;
 
     return (
