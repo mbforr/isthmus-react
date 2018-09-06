@@ -62,6 +62,8 @@ class Category extends Component {
     });
 
     this.dataView.on('dataChanged', ({ categories }) => this.setState({ categories }));
+
+    console.log('CATEGORY ', this.state)
     this.props.client.addDataview(this.dataView);
  }
 
@@ -79,7 +81,7 @@ class Category extends Component {
 
   onSelectedChanged = ({ detail }) => {
     let { filter } = this.state;
-    console.log('onSelectedChanged: ', filter)
+
 
     if (filter && !detail.length) {
       this.props.categoryLayer.removeFilter(filter);

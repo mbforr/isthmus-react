@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { setNeighbourhoods } from '../actions/actions';
 import carto, { filter, source, style, layer  } from '@carto/carto.js';
 import Category from './widgets/Category'
+import Histogram from './widgets/Histogram'
 import airship from '@carto/airship-style'
 
 class RightBar extends Component {
@@ -27,6 +28,8 @@ class RightBar extends Component {
         operation={carto.operation.SUM}
         operationColumn='total_damage'
       />
+    
+      <Histogram />
       </div>
     )
   }
