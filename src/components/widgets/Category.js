@@ -82,7 +82,6 @@ class Category extends Component {
   onSelectedChanged = ({ detail }) => {
     let { filter } = this.state;
 
-
     if (filter && !detail.length) {
       this.props.categoryLayer.removeFilter(filter);
       filter = null;
