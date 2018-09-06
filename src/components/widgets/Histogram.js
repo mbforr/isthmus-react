@@ -81,11 +81,11 @@ class Histogram extends Component {
  onSelectedChanged = ({ detail }) => {
    let { filter } = this.state;
 
-   if (filter && !detail.length) {
+   if (filter) {
      this.props.layers.railaccidents.source.removeFilter(filter);
      filter = null;
    }
-
+   console.log('ITS ME', detail)
    this.setState({ range: detail, filter });
 
  }
@@ -93,13 +93,16 @@ class Histogram extends Component {
  completeUpdateRangeFilter(event) {
    const { onSelectedChanged } = this;
    onSelectedChanged && onSelectedChanged(event);
-   this.onApplySelection()
+
  }
 
 
   setupEvents() {
     this.widget.addEventListener('selectionChanged', (event) => {
       this.completeUpdateRangeFilter(event)
+
+      //this.onSelectedChanged(event)
+      
     });
   }
 
