@@ -28,7 +28,7 @@ class RightBar extends Component {
         operation={carto.operation.SUM}
         operationColumn='total_damage'
       />
-    
+
       <Histogram />
       </div>
     )

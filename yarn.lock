@@ -43,9 +43,9 @@
     react-day-picker "^7.1.4"
     react-emotion "^9.0.1"
 
-"@carto/carto.js@^4.0.8":
-  version "4.1.3"
-  resolved "https://registry.yarnpkg.com/@carto/carto.js/-/carto.js-4.1.3.tgz#26aecb1dac88e27987d1a81c2f6d48c34cd920a9"
+"@carto/carto.js@^4.1.6":
+  version "4.1.6"
+  resolved "https://registry.yarnpkg.com/@carto/carto.js/-/carto.js-4.1.6.tgz#b1b5c5b8fd42b6f1b1a1a874c31b5455fb082c93"
   dependencies:
     "@carto/zera" "1.0.7"
     backbone "1.2.3"

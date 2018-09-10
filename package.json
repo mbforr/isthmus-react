@@ -15,7 +15,7 @@
     "@carto/airship": "^1.0.0-alpha.14",
     "@carto/airship-icons": "^1.0.0-alpha-27.0",
     "@carto/airship-style": "1.0.0-alpha.37",
-    "@carto/carto.js": "^4.0.8",
+    "@carto/carto.js": "^4.1.6",
     "axios": "^0.18.0",
     "babel-cli": "6.24.1",
     "babel-core": "6.25.0",

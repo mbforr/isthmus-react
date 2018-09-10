@@ -62,15 +62,16 @@ class Histogram extends Component {
    const filter = new carto.filter.Range('rr_employees_injured', { between: { min, max } });
    this.props.layers.railaccidents.source.addFilter(filter);
    this.setState({ filter: filter });
-   console.log('CREATE!!!!', filter._filters.between)
+   console.log('CREATE!!!!', filter._filters.between) //CHECK HERE CHECK HERE CHECK HERE
 
  }
 
  updateFilter() {
+   //console.log(this.state.layers.railaccidents.source._appliedFilters._filters)
    const { range, filter } = this.state
    const min = range[0]
    const max = range[1]
-   console.log('UPDATE!!!!', filter._filters.between, this.state.filter._filters.between, this.state.range)
+   console.log('UPDATE!!!!', filter._filters.between, this.state.filter._filters.between, this.state.range)  //CHECK HERE CHECK HERE CHECK HERE
    filter.setFilters({ between: { min, max } });
  }
 
@@ -105,8 +106,11 @@ class Histogram extends Component {
   }
 
 
+
+
   render() {
     const { data } = this.state;
+
 
     return (
       <as-histogram-widget
