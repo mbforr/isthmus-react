@@ -29,6 +29,14 @@ class RightBar extends Component {
         operationColumn='total_damage'
       />
 
+      <Category
+        heading='State'
+        description='Total damage for each railroad company in USD'
+        categoryLayer={this.props.layers.railaccidents.source}
+        column='state'
+        operation={carto.operation.SUM}
+        operationColumn='equipment_damage'
+      />
       <Histogram />
       </div>
     )

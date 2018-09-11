@@ -23,23 +23,12 @@ export const changeCartoBBox = boundingbox => ({
 });
 
 
-export const SET_PRICE = '@Filters/SET_PRICE';
-export const setPriceFilter = filter => ({
-  type: SET_PRICE,
-  filter,
-});
-
 export const SET_BBOX = '@Filters/SET_BBOX';
 export const setBboxFilter = bbox => ({
   type: SET_BBOX,
   bbox,
 });
 
-export const SET_NEIGHBOURHOODS = '@Filters/SET_NEIGHBOURHOODS';
-export const setNeighbourhoods = neighbourhoods => ({
-  type: SET_NEIGHBOURHOODS,
-  neighbourhoods,
-});
 
 export const TOGGLE_LAYER = '@Layers/TOGGLE';
 export const toggleLayer = name => ({
