@@ -21,15 +21,6 @@ class RightBar extends Component {
     return (
       <div>
       <Category
-        heading='Railroad Company'
-        description='Total damage for each railroad company in USD'
-        categoryLayer={this.props.layers.railaccidents.source}
-        column='railroad'
-        operation={carto.operation.SUM}
-        operationColumn='total_damage'
-      />
-
-      <Category
         heading='State'
         description='Total damage for each railroad company in USD'
         categoryLayer={this.props.layers.railaccidents.source}
