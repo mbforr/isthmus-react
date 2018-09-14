@@ -86,6 +86,7 @@ class Histogram extends Component {
      this.props.layers.railaccidents.source.removeFilter(filter);
      filter = null;
      this.setState({ filter });
+     console.log('onSelectedChanged DID SOMETHING')
    }
  }
 
@@ -96,6 +97,8 @@ class Histogram extends Component {
    console.log(data, this.widget.data)
    //if (event.detail !== this.state.range) {
     if (this.widget.data === data && event.detail === this.state.range) {
+      console.log('DATA VALUE', data === this.widget.data)
+      console.log('RANGE VALUE', event.detail === this.state.range)
      this.onApplySelection()
    }
  }
