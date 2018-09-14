@@ -5,6 +5,7 @@ import { setNeighbourhoods } from '../actions/actions';
 import carto, { filter, source, style, layer  } from '@carto/carto.js';
 import Category from './widgets/Category'
 import Histogram from './widgets/Histogram'
+import Export from './widgets/Export'
 import airship from '@carto/airship-style'
 
 class RightBar extends Component {
@@ -20,6 +21,12 @@ class RightBar extends Component {
 
     return (
       <div>
+      <Export
+        layer={this.props.layers.railaccidents.source}
+        format='shp'
+        filename='rail_data'
+      />
+    <br />
       <Category
         heading='State'
         description='Total damage for each railroad company in USD'
