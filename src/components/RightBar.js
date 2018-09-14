@@ -25,6 +25,7 @@ class RightBar extends Component {
         layer={this.props.layers.railaccidents.source}
         format='shp'
         filename='rail_data'
+        name='Export Data'
       />
     <br />
       <Category

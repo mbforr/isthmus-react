@@ -149,10 +149,11 @@ Isthmus includes a central application state that is managed by Redux. You can s
 
 The application state is as follows:
 
-| `boundingbox` | Contains information for CARTO to use a Bounding Box filter in the data. See the [CARTO.js Docs here](https://carto.com/developers/carto-js/reference/#cartofilterboundingboxleaflet) for more information                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `client`      | Contains information for your `carto.Client` which is the entry point and authentication for your application. See more in the [CARTO.js docs here](https://carto.com/developers/carto-js/reference/#cartoclient)                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| `layers`      | Contains information about your CARTO layers that have been added to the map in the `carto.layer.Layer` object. See this [CARTO.js documentation](https://carto.com/developers/carto-js/reference/#cartolayerlayer) for more information.
+| **State Item** | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `boundingbox`  | Contains information for CARTO to use a Bounding Box filter in the data. See the [CARTO.js Docs here](https://carto.com/developers/carto-js/reference/#cartofilterboundingboxleaflet) for more information                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `client`       | Contains information for your `carto.Client` which is the entry point and authentication for your application. See more in the [CARTO.js docs here](https://carto.com/developers/carto-js/reference/#cartoclient)                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `layers`       | Contains information about your CARTO layers that have been added to the map in the `carto.layer.Layer` object. See this [CARTO.js documentation](https://carto.com/developers/carto-js/reference/#cartolayerlayer) for more information.
 
 The layer object will inherit the name given in the index.js file. This will contain most of the information about modifying the layer, query, dataviews, and styles. For example in the example application:
 
@@ -160,8 +161,8 @@ The layer object will inherit the name given in the index.js file. This will con
 `this.props.layers.railaccidents.style` contains styling information
 
 Review the documentation for more information. |
-| `map`         | Contains the Leaflet map object which stores all the map information. Please refer to the [Leaflet documentation here](https://leafletjs.com/reference-1.3.4.html#map-example)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| `viewport`    | Contains information about the current viewport view, specifically:
+| `map`          | Contains the Leaflet map object which stores all the map information. Please refer to the [Leaflet documentation here](https://leafletjs.com/reference-1.3.4.html#map-example)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `viewport`     | Contains information about the current viewport view, specifically:
 
 `center`: Array contain the Latitude and Longitude of the center of the map
 `zoom`: Current zoom level                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
@@ -207,7 +208,24 @@ When you add multiple filter to the same source, CARTO.js will assume that they 
 
 ## Other Controls
 
-*Coming Soon - see the Roadmap section below or submit an issue to propose a new feature.*
+**Export**
+
+To allow for exporting of your data you can add an Export button that allows you to export data for one layer. Data will export with filters if they have been applied.
+
+
+    <Export
+      layer={this.props.layers.railaccidents.source}
+      format='shp'
+      filename='rail_data'
+      name='Export Data'
+    />
+
+
+| `layer`    | Layer which the export button will be created for. This will follow the format `this.props.layers.{LAYER_NAME}.source`                                                                                   |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `format`   | File format that will exported. Options include `gpkg`, `csv`, `shp`, `svg`, `kml`, `spatialite`, `geojson` - [see more here](https://carto.com/developers/sql-api/reference/#operation/getSQLStatement) |
+| `filename` | Filename of the exported file                                                                                                                                                                            |
+| `name`     | Title of the export button                                                                                                                                                                               |
 
 ## Adjusting Layout
 
@@ -278,10 +296,11 @@ We are working on adding more features and functionality into Isthmus, but if th
 - Export Button
 - Layer Toggle (in Legend)
 - Checkbox List
-- Address Search
-- Infowindow
+- **Address Search**
+- **Infowindow**
 - Results Table
-- Numeric Display (Formula)
+- **Layout Options in Components**
+- **Numeric Display (Formula)**
 - Range Slider
 - [Avatar](https://carto-airship.netlify.com/catalog/#/styles/avatar)
 - *Line Chart - dependent on Airship*
