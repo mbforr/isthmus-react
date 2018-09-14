@@ -62,7 +62,6 @@ class Histogram extends Component {
    const filter = new carto.filter.Range('rr_employees_injured', { between: { min, max } });
    this.props.layers.railaccidents.source.addFilter(filter);
    this.setState({ filter: filter });
-   //console.log('CREATE!!!!', filter._filters.between) //CHECK HERE CHECK HERE CHECK HERE
 
  }
 
@@ -70,27 +69,16 @@ class Histogram extends Component {
    const { range, filter } = this.state
    const min = range[0]
    const max = range[1]
-   //console.log('UPDATE!!!!', filter._filters.between, this.state.filter._filters.between, this.state.range)  //CHECK HERE CHECK HERE CHECK HERE
    filter.setFilters({ between: { min, max } });
  }
 
  onApplySelection() {
    const matt = this.props.layers.railaccidents.source._appliedFilters._filters
    const { filter, range } = this.state;
-   const testing = {min: range[0], max: range[1]}
-   if (!filter) {
-     this.createFilter()
-   } else if (filter !== matt) {
-     console.log(filter === matt[0])
-     console.log(filter, matt[0])
-     this.updateFilter();
-   }
-   // !filter
-   //   ? this.createFilter()
-   //   : this.updateFilter();
+   !filter
+     ? this.createFilter()
+     : this.updateFilter();
  }
-
-
 
  onSelectedChanged = ({ detail }) => {
    let { filter } = this.state;
@@ -101,32 +89,22 @@ class Histogram extends Component {
    }
  }
 
-
- // onSelectedChanged = ({ detail }) => {
- //   let { filter } = this.state;
- //
- //   if (filter && !detail.length) {
- //     this.props.categoryLayer.removeFilter(filter);
- //     filter = null;
- //   }
- //
- //   this.setState({ selection: detail, filter });
- // }
-
  completeUpdateRangeFilter(event) {
    const { onSelectedChanged } = this;
+   const { data } = this.state;
    onSelectedChanged && onSelectedChanged(event);
-   console.log('ME')
-   this.onApplySelection()
+   console.log(data, this.widget.data)
+   //if (event.detail !== this.state.range) {
+    if (this.widget.data === data && event.detail === this.state.range) {
+     this.onApplySelection()
+   }
  }
 
   setupEvents() {
     let { range, filter } =  this.state;
     this.widget.addEventListener('selectionChanged', (event) => {
       this.setState({ range: event.detail });
-
       this.completeUpdateRangeFilter(event)
-
     });
   }
 
