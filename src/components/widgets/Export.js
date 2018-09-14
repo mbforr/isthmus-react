@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import carto from '@carto/carto.js';
 import C from '../../data/C'
 
-const { SQL_API_URL} = C;
+const { SQL_API_URL, API_KEY } = C;
 
 class Export extends Component {
 
@@ -19,7 +19,7 @@ class Export extends Component {
 
   exportData() {
     const query = this.props.layer._getQueryToApply()
-    var url = `${SQL_API_URL}${query}&format=${this.props.format}&filename=${this.props.filename}.${this.props.format}`
+    var url = `${SQL_API_URL}${query}&format=${this.props.format}&filename=${this.props.filename}.${this.props.format}&api_key=${API_KEY}`
     window.open(url)
   }
 
