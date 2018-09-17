@@ -21,6 +21,7 @@ class RightBar extends Component {
 
     return (
       <div>
+
       <Export
         layer={this.props.layers.railaccidents.source}
         format='shp'
@@ -37,6 +38,7 @@ class RightBar extends Component {
         operationColumn='equipment_damage'
       />
       <Histogram />
+      
       </div>
     )
   }
