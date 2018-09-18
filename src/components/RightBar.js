@@ -23,7 +23,11 @@ class RightBar extends Component {
     return (
       <div>
       <div className="as-p--16">
-      <Formula />
+      <Formula
+        round={false}
+        currency={false}
+        operation={carto.operation.MAX}
+      />
       </div>
       <div className="as-p--16">
       <Export

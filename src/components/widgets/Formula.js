@@ -15,7 +15,7 @@ class Formula extends Component {
   };
 
   state = {
-    data: null,
+    data: 0,
     range: null,
     filter: null
   };
@@ -42,11 +42,24 @@ class Formula extends Component {
 
   addDataview() {
     this.dataView = new carto.dataview.Formula(this.props.layers.railaccidents.source, 'total_damage', {
-      operation: carto.operation.AVG
+      operation: this.props.operation
     });
 
     this.dataView.on('dataChanged', newData => {
-      this.setState({ data: newData })
+      let formattedData
+      if (this.props.round === true && this.props.currency === false) {
+        formattedData = newData.result.toLocaleString('en-US', {maximumFractionDigits: 0})
+      } else if (this.props.currency === true && this.props.round === false) {
+        formattedData = newData.result.toLocaleString('en-US', {maximumFractionDigits: 2, style: 'currency', currency: 'USD'})
+      } else if (this.props.currency === true && this.props.round === true) {
+        formattedData = newData.result.toLocaleString('en-US', {maximumFractionDigits: 0, style: 'currency', currency: 'USD'})
+      } else {
+        formattedData = newData.result.toLocaleString('en-US', {maximumFractionDigits: 2})
+      }
+
+
+      this.setState({ data: formattedData })
+      console.log(newData)
     });
 
     // this.dataView.on('dataChanged', ( data ) => {
@@ -125,7 +138,7 @@ class Formula extends Component {
       <div>
         <h4 className="as-subheader as-font--medium">Formula Title</h4>
         <p className="as-body">Description of the formula widget</p>
-        <h2 className="as-display">{this.state.data}</h2>
+        <h2 className="as-display">{data}</h2>
       </div>
     );
   }
