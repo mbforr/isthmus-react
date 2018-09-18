@@ -41,7 +41,7 @@ class Formula extends Component {
   }
 
   addDataview() {
-    this.dataView = new carto.dataview.Formula(this.props.layers.railaccidents.source, 'total_damage', {
+    this.dataView = new carto.dataview.Formula(this.props.layer, this.props.column, {
       operation: this.props.operation
     });
 
@@ -132,12 +132,12 @@ class Formula extends Component {
 
   render() {
     const { data } = this.state;
-
+    const { title, description } = this.props;
 
     return (
       <div>
-        <h4 className="as-subheader as-font--medium">Formula Title</h4>
-        <p className="as-body">Description of the formula widget</p>
+        <h4 className="as-subheader as-font--medium">{title}</h4>
+        <p className="as-body">{description}</p>
         <h2 className="as-display">{data}</h2>
       </div>
     );
