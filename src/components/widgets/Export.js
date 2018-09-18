@@ -27,7 +27,7 @@ class Export extends Component {
 
     return (
       <button className="as-btn as-btn--primary as-btn--l" onClick={this.exportData}>
-        <i aria-hidden class="as-icon-arrow-down"></i>
+        <i aria-hidden className="as-icon-arrow-down"></i>
         <p>{this.props.name}</p>
       </button>
     );
