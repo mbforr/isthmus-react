@@ -26,8 +26,8 @@ class RightBar extends Component {
       <Formula
         title='Total Damage'
         description='Average total damage in USD for accidents in view'
-        round={false}
-        currency={false}
+        round={true}
+        currency={true}
         layer={this.props.layers.railaccidents.source}
         column='total_damage'
         operation={carto.operation.AVG}
