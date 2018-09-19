@@ -24,7 +24,13 @@ class RightBar extends Component {
     return (
       <div>
       <div className="as-p--16">
-      <Range />
+      <Range
+        title='Temperature'
+        description='Temperature at the time of the accident'
+        layer={this.props.layers.railaccidents.source}
+        column='temp'
+        step={1}
+      />
       </div>
       <div className="as-p--16">
       <Formula

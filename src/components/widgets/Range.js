@@ -8,115 +8,107 @@ import carto from '@carto/carto.js';
 class Range extends Component {
 
   state = {
-    data: [],
-    range: null,
+    data: null,
+    min: 0,
+    max: 0,
+    rangeMin: 0,
+    rangeMax: 0,
+    range: [0, 0],
     filter: null
   };
 
- //  componentDidMount() {
- //    this.setupConfig();
- //    this.setupEvents();
- //    this.addDataview();
- //  }
- //
- //  componentDidUpdate(prevProps) {
- //    this.setupConfig();
- //    const bboxFilter = new carto.filter.BoundingBoxLeaflet(this.props.map)
- //
- //    if(prevProps !== this.props) {
- //      this.dataView.addFilter(this.props.boundingbox);
- //    }
- //  }
- //
- //  setupConfig() {
- //    const { data } = this.state
- //    this.widget.data = data;
- //  }
- //
- //  addDataview() {
- //    this.dataView = new carto.dataview.Histogram(this.props.layers.railaccidents.source, 'rr_employees_injured', {
- //      bins: 1
- //    });
- //
- //    this.dataView.on('dataChanged', ( data ) => {
- //      const d = data.bins
- //      const finalData = d.map(d => ({ start: d.start, end: d.end, value: d.freq }))
- //      this.setState({ data: finalData })
- //
- //    });
- //
- //    this.props.client.addDataview(this.dataView);
- // }
- //
- // createFilter() {
- //   const { range } = this.state
- //   const min = range[0]
- //   const max = range[1]
- //   const filter = new carto.filter.Range('rr_employees_injured', { between: { min, max } });
- //   this.props.layers.railaccidents.source.addFilter(filter);
- //   this.setState({ filter: filter });
- //
- // }
- //
- // updateFilter() {
- //   const { range, filter } = this.state
- //   const min = range[0]
- //   const max = range[1]
- //   filter.setFilters({ between: { min, max } });
- // }
- //
- // onApplySelection() {
- //   const matt = this.props.layers.railaccidents.source._appliedFilters._filters
- //   const { filter, range } = this.state;
- //   !filter
- //     ? this.createFilter()
- //     : this.updateFilter();
- // }
- //
- // onSelectedChanged = ({ detail }) => {
- //   let { filter } = this.state;
- //   if (!detail.length) {
- //     this.props.layers.railaccidents.source.removeFilter(filter);
- //     filter = null;
- //     this.setState({ filter });
- //     console.log('onSelectedChanged DID SOMETHING')
- //   }
- // }
- //
- // completeUpdateRangeFilter(event) {
- //   const { onSelectedChanged } = this;
- //   const { data } = this.state;
- //   onSelectedChanged && onSelectedChanged(event);
- //   console.log(data, this.widget.data)
- //   //if (event.detail !== this.state.range) {
- //    if (this.widget.data === data && event.detail === this.state.range) {
- //      console.log('DATA VALUE', data === this.widget.data)
- //      console.log('RANGE VALUE', event.detail === this.state.range)
- //     this.onApplySelection()
- //   }
- // }
- //
- //  setupEvents() {
- //    let { range, filter } =  this.state;
- //    this.widget.addEventListener('selectionChanged', (event) => {
- //      this.setState({ range: event.detail });
- //      this.completeUpdateRangeFilter(event)
- //    });
- //  }
+  componentDidMount() {
+    this.setupEvents();
+    this.addDataview();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { filter } = this.state;
+    this.setupRange();
+  }
+
+  setupRange() {
+    const { rangeMin, rangeMax } = this.state
+    this.widget.range = [rangeMin, rangeMax]
+  }
+
+  addDataview() {
+
+    this.dataViewMin = new carto.dataview.Formula(this.props.layer, this.props.column, {
+      operation: carto.operation.MIN
+    });
+
+    this.dataViewMax = new carto.dataview.Formula(this.props.layer, this.props.column, {
+      operation: carto.operation.MAX
+    });
+
+    this.dataViewMin.on('dataChanged', newData => {
+      let minimum
+      minimum = newData.result
+      this.setState({ min: minimum })
+      this.setState({ rangeMin: minimum })
+    })
+
+    this.dataViewMax.on('dataChanged', newData => {
+      let maximum
+      maximum = newData.result
+      this.setState({ max: maximum })
+      this.setState({ rangeMax: maximum })
+    })
+
+    this.props.client.addDataview(this.dataViewMin);
+    this.props.client.addDataview(this.dataViewMax);
+
+ }
+
+ createFilter() {
+   const { rangeMin, rangeMax } = this.state
+   const minRange = rangeMin
+   const maxRange = rangeMax
+   const filter = new carto.filter.Range(this.props.column, { gte: minRange, lte: maxRange });
+   this.props.layers.railaccidents.source.addFilter(filter);
+   this.setState({ filter: filter });
+ }
+
+ updateFilter() {
+   const { filter, data } = this.state
+   const minRangeTwo = data[0]
+   const maxRangeTwo = data[1]
+   filter.setFilters({ gte: minRangeTwo, lte: maxRangeTwo });
+ }
+
+ onApplySelection() {
+   const { filter } = this.state;
+   !filter
+     ? this.createFilter()
+     : this.updateFilter();
+ }
+
+ setupEvents() {
+    this.widget.addEventListener('changeEnd', (event) => {
+      this.setState({ data: event.detail })
+      this.setState({ rangeMin: event.detail[0] })
+      this.setState({ rangeMax: event.detail[1] })
+      this.onApplySelection();
+    })
+ }
 
   render() {
     const { data } = this.state;
-
-
+    const { title, description } = this.props;
+    
     return (
+      <div>
+      <h4 className="as-subheader as-font--medium">{title}</h4>
+      <p className="as-body">{description}</p>
       <as-range-slider
         ref={node => { this.widget = node; }}
-        min-value="25"
-        range={[30, 70]}
-        step={5}
+        min-value={this.state.min}
+        step={this.props.step}
         draggable={true}
-        max-value="75">
+        max-value={this.state.max}>
       </as-range-slider>
+      </div>
     );
   }
 
