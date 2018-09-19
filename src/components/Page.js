@@ -2,11 +2,7 @@ import React from 'react';
 import CARTOMapNew from './CARTOMapNew';
 import Header from './Header'
 import RightBar from '../components/RightBar'
-import airship from '@carto/airship-style'
-
-
-
-//Header should go in here
+import '@carto/airship-style';
 
 const Page = () => (
   <div className="as-app">

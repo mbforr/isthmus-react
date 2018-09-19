@@ -3,7 +3,7 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import carto from '@carto/carto.js';
-import { defineCustomElements } from '@carto/airship-components';
+
 
 class Histogram extends Component {
 

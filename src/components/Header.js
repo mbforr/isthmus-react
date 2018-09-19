@@ -3,7 +3,6 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import carto from '@carto/carto.js';
-import airship from '@carto/airship-style'
 
 class Header extends Component {
 

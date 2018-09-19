@@ -29,13 +29,9 @@
     d3-selection "^1.3.0"
     d3-transition "^1.1.1"
 
-"@carto/airship-icons@^1.0.0-alpha-27.0":
-  version "1.0.0-alpha-27.0"
-  resolved "https://registry.yarnpkg.com/@carto/airship-icons/-/airship-icons-1.0.0-alpha-27.0.tgz#57ee972df4aa592ccd3b4e263012417ef5baf4e8"
-
-"@carto/airship-style@1.0.0-alpha.37":
-  version "1.0.0-alpha.37"
-  resolved "https://registry.yarnpkg.com/@carto/airship-style/-/airship-style-1.0.0-alpha.37.tgz#cf43233ce4aae5bc105e5155cd29aceb5a9acafb"
+"@carto/airship-style@^1.0.0-alpha.43":
+  version "1.0.0-alpha.43"
+  resolved "https://registry.yarnpkg.com/@carto/airship-style/-/airship-style-1.0.0-alpha.43.tgz#0ae38d2d4a936768b0a616f3713ad72d25bbcf13"
 
 "@carto/airship@^1.0.0-alpha.14":
   version "1.0.0-alpha.25"
@@ -5376,9 +5372,9 @@ normalize-url@^1.4.0:
     query-string "^4.1.0"
     sort-keys "^1.0.0"
 
-normalize.css@7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-7.0.0.tgz#abfb1dd82470674e0322b53ceb1aaf412938e4bf"
+normalize.css@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-8.0.0.tgz#14ac5e461612538a4ce9be90a7da23f86e718493"
 
 npm-run-path@^2.0.0:
   version "2.0.2"

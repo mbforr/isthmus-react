@@ -9,7 +9,7 @@ import { storeLayers, setMap, setBboxFilter, changeViewport, changeCartoBBox } f
 import InfoWindow from '../components/InfoWindow'
 import layers from '../data/layers';
 import C from '../data/C'
-import airship from '@carto/airship-style'
+import '@carto/airship-style';
 
 // import './index.css';
 

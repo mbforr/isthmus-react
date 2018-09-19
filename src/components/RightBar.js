@@ -8,7 +8,7 @@ import Histogram from './widgets/Histogram'
 import Formula from './widgets/Formula'
 import Range from './widgets/Range'
 import Export from './widgets/Export'
-import airship from '@carto/airship-style'
+import '@carto/airship-style';
 
 class RightBar extends Component {
 
