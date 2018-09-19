@@ -31,6 +31,8 @@ class Header extends Component {
 
       <div className="as-toolbar__group">
         <div className="as-toolbar__item">
+          <img class="as-avatar as-avatar--l" src="https://pbs.twimg.com/profile_images/1016245050047688704/akLFdn39_400x400.jpg" alt="CARTO"></img>
+
         </div>
 
         <nav className="as-toolbar__actions">
