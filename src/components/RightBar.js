@@ -64,7 +64,13 @@ class RightBar extends Component {
       />
       </div>
       <div className="as-p--16">
-      <Histogram />
+      <Histogram
+        title='Hour'
+        description='Hour at the time of the accident'
+        layer={this.props.layers.railaccidents.source}
+        column='hour'
+        bins={12}
+      />
       </div>
       </div>
     )

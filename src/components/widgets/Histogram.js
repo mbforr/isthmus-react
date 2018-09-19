@@ -41,8 +41,8 @@ class Histogram extends Component {
   }
 
   addDataview() {
-    this.dataView = new carto.dataview.Histogram(this.props.layers.railaccidents.source, 'rr_employees_injured', {
-      bins: 10
+    this.dataView = new carto.dataview.Histogram(this.props.layer, this.props.column, {
+      bins: this.props.bins
     });
 
     this.dataView.on('dataChanged', ( data ) => {
@@ -59,8 +59,8 @@ class Histogram extends Component {
    const { range } = this.state
    const min = range[0]
    const max = range[1]
-   const filter = new carto.filter.Range('rr_employees_injured', { between: { min, max } });
-   this.props.layers.railaccidents.source.addFilter(filter);
+   const filter = new carto.filter.Range(this.props.column, { between: { min, max } });
+   this.props.layer.addFilter(filter);
    this.setState({ filter: filter });
 
  }
@@ -73,7 +73,7 @@ class Histogram extends Component {
  }
 
  onApplySelection() {
-   const matt = this.props.layers.railaccidents.source._appliedFilters._filters
+   const matt = this.props.layer._appliedFilters._filters
    const { filter, range } = this.state;
    !filter
      ? this.createFilter()
@@ -83,7 +83,7 @@ class Histogram extends Component {
  onSelectedChanged = ({ detail }) => {
    let { filter } = this.state;
    if (!detail.length) {
-     this.props.layers.railaccidents.source.removeFilter(filter);
+     this.props.layer.removeFilter(filter);
      filter = null;
      this.setState({ filter });
      console.log('onSelectedChanged DID SOMETHING')
@@ -116,13 +116,13 @@ class Histogram extends Component {
 
   render() {
     const { data } = this.state;
-
+    const { title, description } = this.props;
 
     return (
       <as-histogram-widget
         ref={node => { this.widget = node; }}
-        heading="Title"
-        description="Description"
+        heading={title}
+        description={description}
         data={data}
         show-header
         show-clear
