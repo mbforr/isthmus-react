@@ -17,8 +17,8 @@ const Page = () => (
       </div>
     </div>
 
-    <aside className="as-sidebar--l as-sidebar--right">
-      <div className="as-container as-container--scrollable as-m--16">
+    <aside className="as-sidebar as-sidebar--l as-sidebar--right">
+      <div className="as-m--24">
         <RightBar />
       </div>
     </aside>
