@@ -85,6 +85,8 @@ class Range extends Component {
  }
 
  setupEvents() {
+    const { before, after } = this.props;
+    this.widget.formatValue = (value) => (`${before}${value}${after}`)
     this.widget.addEventListener('changeEnd', (event) => {
       this.setState({ data: event.detail })
       this.setState({ rangeMin: event.detail[0] })
@@ -96,7 +98,7 @@ class Range extends Component {
   render() {
     const { data } = this.state;
     const { title, description } = this.props;
-    
+
     return (
       <div>
       <h4 className="as-subheader as-font--medium">{title}</h4>

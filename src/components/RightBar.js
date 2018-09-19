@@ -25,6 +25,8 @@ class RightBar extends Component {
       <div>
       <div className="as-p--16">
       <Range
+        before=''
+        after='°F'
         title='Temperature'
         description='Temperature at the time of the accident'
         layer={this.props.layers.railaccidents.source}
