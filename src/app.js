@@ -5,7 +5,7 @@ import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
-// import { PersistGate } from 'redux-persist/integration/react'
+import { defineCustomElements } from '@carto/airship-components';
 
 const store  = configureStore();
 

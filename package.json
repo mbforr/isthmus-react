@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@carto/airship": "^1.0.0-alpha.14",
+    "@carto/airship-components": "^1.0.0-alpha.43",
     "@carto/airship-icons": "^1.0.0-alpha-27.0",
     "@carto/airship-style": "1.0.0-alpha.37",
     "@carto/carto.js": "^4.1.6",

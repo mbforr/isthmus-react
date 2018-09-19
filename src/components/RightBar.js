@@ -6,6 +6,7 @@ import carto, { filter, source, style, layer  } from '@carto/carto.js';
 import Category from './widgets/Category'
 import Histogram from './widgets/Histogram'
 import Formula from './widgets/Formula'
+import Range from './widgets/Range'
 import Export from './widgets/Export'
 import airship from '@carto/airship-style'
 
@@ -22,6 +23,9 @@ class RightBar extends Component {
 
     return (
       <div>
+      <div className="as-p--16">
+      <Range />
+      </div>
       <div className="as-p--16">
       <Formula
         title='Total Damage'
