@@ -22,7 +22,8 @@ class RightBar extends Component {
   render() {
 
     return (
-      <div>
+      <aside className="as-sidebar as-sidebar--l as-sidebar--right">
+      <div className="as-m--24">
       <div className="as-p--16">
       <Range
         before=''
@@ -73,6 +74,8 @@ class RightBar extends Component {
       />
       </div>
       </div>
+      </aside>
+
     )
   }
 }
