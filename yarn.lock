@@ -30,8 +30,8 @@
     d3-transition "^1.1.1"
 
 "@carto/airship-style@^1.0.0-alpha.43":
-  version "1.0.0-alpha.43"
-  resolved "https://registry.yarnpkg.com/@carto/airship-style/-/airship-style-1.0.0-alpha.43.tgz#0ae38d2d4a936768b0a616f3713ad72d25bbcf13"
+  version "1.0.0-alpha.44"
+  resolved "https://registry.yarnpkg.com/@carto/airship-style/-/airship-style-1.0.0-alpha.44.tgz#611fc089e7cd286cc77638fada84b5dbe80946c9"
 
 "@carto/airship@^1.0.0-alpha.14":
   version "1.0.0-alpha.25"

@@ -7,31 +7,30 @@ import BottomBar from '../components/layout/BottomBar'
 import '@carto/airship-style';
 
 const Page = () => (
-  <div className="as-app">
-
-  <Header />
-
-  <main className="as-app-content as-main">
-
-    <div className="as-map-wrapper">
-      <div className="as-map-area">
-        <CARTOMapNew />
-
-      </div>
-      <BottomBar
+  <body className="as-app">
+    <Header />
+    <div className="as-content">
+      <main className="as-main">
+        <div className="as-map-area">
+          <CARTOMapNew />
+            <div className="as-map-panels">
+            <div className="as-panel as-panel--top as-panel--left">
+              <div className="as-panel__element as-p--32 as-bg--support-02">
+                  <p className="as-body"> ADD IN PROPERTIES FOR POSITION </p>
+                </div>
+            </div>
+            </div>
+        </div>
+        <BottomBar />
+      </main>
+      <RightBar
+        size='l'
+      />
+      <LeftBar
+        size='s'
       />
     </div>
-    <RightBar
-      size='l'
-    />
-    <LeftBar
-      size='s'
-    />
-
-
-
-  </main>
-  </div>
+  </body>
 );
 
 export default Page;
