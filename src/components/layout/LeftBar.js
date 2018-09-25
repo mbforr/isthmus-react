@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
-import { setNeighbourhoods } from '../actions/actions';
+import { setNeighbourhoods } from '../../actions/actions';
 import carto, { filter, source, style, layer  } from '@carto/carto.js';
-import Category from './widgets/Category'
-import Histogram from './widgets/Histogram'
-import Formula from './widgets/Formula'
-import Range from './widgets/Range'
-import Export from './widgets/Export'
+import Category from '.././widgets/Category'
+import Histogram from '.././widgets/Histogram'
+import Formula from '.././widgets/Formula'
+import Range from '.././widgets/Range'
+import Export from '.././widgets/Export'
 import '@carto/airship-style';
 
 class LeftBar extends Component {
@@ -19,10 +19,21 @@ class LeftBar extends Component {
       }
   }
 
+  state = {
+    size: null
+  };
+
+
+
+  componentDidMount() {
+    const z = `as-sidebar as-sidebar--${this.props.size} as-sidebar--left`;
+    this.setState({size: z})
+  }
+
   render() {
 
     return (
-      <aside className="as-sidebar as-sidebar--m as-sidebar--left">
+      <aside className={this.state.size}>
       <div className="as-m--24">
       <div className="as-p--16">
       <Formula
