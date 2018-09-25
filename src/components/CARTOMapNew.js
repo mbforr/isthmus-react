@@ -112,10 +112,8 @@ class CARTOMapNew extends Component {
     const { layers } = this.props;
     const hasLayers = Object.keys(layers).length > 0;
 
-    return (
-      <div>
+    return (      
         <div id="map"></div>
-      </div>
     );
   }
 }
