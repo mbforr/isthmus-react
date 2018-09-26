@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import LayerToggle from '../widgets/LayerToggle'
+import StyleToggle from '../widgets/StyleToggle'
 import '@carto/airship-style';
 
 class Panel extends Component {
@@ -24,12 +25,28 @@ class Panel extends Component {
 
   render() {
 
+    const cartocss = `#layer {
+      marker-width: ramp([equipment_damage], range(2, 20), quantiles(5));
+      marker-fill: #4d78ee;
+      marker-fill-opacity: 0.3;
+      marker-allow-overlap: true;
+      marker-line-width: 1;
+      marker-line-color: #FFFFFF;
+      marker-line-opacity: 1;
+      marker-comp-op: screen;
+    }`
+
     return (
       <div className="as-map-panels">
         <div className={this.state.position}>
           <div className="as-panel__element as-p--32">
             <LayerToggle
               layer={this.props.layers.railaccidents}
+            />
+            <StyleToggle
+              layer={this.props.layers.railaccidents}
+              name='Change Points Style'
+              cartocss={cartocss}
             />
           </div>
         </div>

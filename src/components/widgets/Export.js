@@ -19,7 +19,9 @@ class Export extends Component {
 
   exportData() {
     const query = this.props.layer._getQueryToApply()
-    var url = `${SQL_API_URL}${query}&format=${this.props.format}&filename=${this.props.filename}.${this.props.format}&api_key=${API_KEY}`
+    console.log(query)
+    let url = `${SQL_API_URL}${query}&format=${this.props.format}&filename=${this.props.filename}.${this.props.format}&api_key=${API_KEY}`
+    console.log(url)
     window.open(url)
   }
 

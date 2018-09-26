@@ -18,7 +18,7 @@ class BottomBar extends Component {
   render() {
 
     return (
-      <footer className="as-map-footer as-bg--badge-yellow">
+      <footer className="as-map-footer as-bg--primary">
         <div className="as-container as-container--scrollable">
           <section className="as-box as-box--large">
             <Formula
