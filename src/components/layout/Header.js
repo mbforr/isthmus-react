@@ -3,6 +3,8 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import carto from '@carto/carto.js';
+import HeaderToggle from './header/HeaderToggle'
+import Avatar from './Avatar'
 
 class Header extends Component {
 
@@ -12,27 +14,19 @@ class Header extends Component {
         ...props
       }
 
-      this._toggleDrawer = this._toggleDrawer.bind(this);
-  }
-
-  _toggleDrawer() {
-    document.querySelector('.as-toolbar__actions').classList.toggle('as-toolbar__actions--visible');
   }
 
   render() {
     return(
-
-  <header className="as-toolbar">
-      <button
-        onClick={this._toggleDrawer}
-        className="as-toolbar__item as-toolbar__toggle">
-        <i className="as-icon-hamburguer as-title as-m--0"></i>
-      </button>
-
+      <header className="as-toolbar">
+        <HeaderToggle />
       <div className="as-toolbar__group">
         <div className="as-toolbar__item">
-          <img className="as-avatar as-avatar--l" src="https://blobscdn.gitbook.com/v0/b/gitbook-28427.appspot.com/o/spaces%2F-LNBHPmcyIcNeWf3W50m%2Favatar.png?generation=1537815172519034&alt=media" alt="CARTO"></img>
-
+          <Avatar
+            size='l'
+            alt='Isthmus'
+            icon="https://blobscdn.gitbook.com/v0/b/gitbook-28427.appspot.com/o/spaces%2F-LNBHPmcyIcNeWf3W50m%2Favatar.png?generation=1537815172519034&alt=media"
+          />
         </div>
 
         <nav className="as-toolbar__actions">

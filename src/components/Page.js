@@ -1,6 +1,6 @@
 import React from 'react';
 import CARTOMapNew from './CARTOMapNew';
-import Header from './Header'
+import Header from './layout/Header'
 import RightBar from './layout/RightBar'
 import LeftBar from './layout/LeftBar'
 import BottomBar from './layout/BottomBar'
