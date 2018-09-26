@@ -24,14 +24,14 @@ class RightBar extends Component {
   };
 
   componentDidMount() {
-    const z = `as-sidebar as-sidebar--${this.props.size} as-sidebar--right`;
+    const z = `as-sidebar as-sidebar--${this.props.size} as-sidebar--right ${this.props.background}`;
     this.setState({size: z})
   }
 
   render() {
 
     return (
-      <aside className={this.state.size}>
+      <aside className={this.state.size} data-name={this.props.name}>
       <div className="as-m--24">
       <div className="as-p--16">
       <Range

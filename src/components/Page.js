@@ -18,15 +18,24 @@ const Page = () => (
             <Panel
               vertical='top'
               horizontal='left'
+              background=''
+              name='Controls'
             />
           </div>
-          <BottomBar />
+          <BottomBar
+            background=''
+            name='Bottom'
+          />
         </main>
         <RightBar
           size='l'
+          background=''
+          name='Right'
         />
         <LeftBar
           size='s'
+          background=''
+          name='Left'
         />
       </div>
     </body>

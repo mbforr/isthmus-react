@@ -17,8 +17,10 @@ class BottomBar extends Component {
 
   render() {
 
+    const background = `as-map-footer ${this.props.background}`
+
     return (
-      <footer className="as-map-footer as-bg--primary">
+      <footer className={background} data-name={this.props.name}>
         <div className="as-container as-container--scrollable">
           <section className="as-box as-box--large">
             <Formula

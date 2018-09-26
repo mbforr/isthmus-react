@@ -36,10 +36,12 @@ class Panel extends Component {
       marker-comp-op: screen;
     }`
 
+    const background = `as-panel__element as-p--32 ${this.props.background}`
+
     return (
-      <div className="as-map-panels">
+      <div className="as-map-panels" data-name={this.props.name}>
         <div className={this.state.position}>
-          <div className="as-panel__element as-p--32">
+          <div className={background}>
             <LayerToggle
               layer={this.props.layers.railaccidents}
             />

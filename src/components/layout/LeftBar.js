@@ -28,14 +28,14 @@ class LeftBar extends Component {
 
 
   componentDidMount() {
-    const z = `as-sidebar as-sidebar--${this.props.size} as-sidebar--left`;
+    const z = `as-sidebar as-sidebar--${this.props.size} as-sidebar--left ${this.props.background}`;
     this.setState({size: z})
   }
 
   render() {
 
     return (
-      <aside className={this.state.size}>
+      <aside className={this.state.size} data-name={this.props.name}>
       <div className="as-m--24">
       <Button
         name='Center Map'
