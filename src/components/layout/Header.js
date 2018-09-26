@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import carto from '@carto/carto.js';
 import HeaderToggle from './header/HeaderToggle'
+import HeaderLink from './header/HeaderLink'
 import Avatar from './Avatar'
 
 class Header extends Component {
@@ -28,15 +29,10 @@ class Header extends Component {
             icon="https://blobscdn.gitbook.com/v0/b/gitbook-28427.appspot.com/o/spaces%2F-LNBHPmcyIcNeWf3W50m%2Favatar.png?generation=1537815172519034&alt=media"
           />
         </div>
-
         <nav className="as-toolbar__actions">
           <ul>
-            <li className="as-toolbar__item">
-              <a href="/">Home</a>
-            </li>
-            <li className="as-toolbar__item">
-              <a href="/help">Help</a>
-            </li>
+            <HeaderLink name='Home' link='/' />
+            <HeaderLink name='Help' link='/help' />
           </ul>
         </nav>
       </div>
