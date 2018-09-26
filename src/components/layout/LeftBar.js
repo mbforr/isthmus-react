@@ -38,7 +38,7 @@ class LeftBar extends Component {
       <aside className={this.state.size}>
       <div className="as-m--24">
       <Button
-        name='CLICK'
+        name='Center Map'
         action={this.moveMap}
         type='secondary'
         size=''
