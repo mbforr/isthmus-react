@@ -3,12 +3,10 @@ import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import { setNeighbourhoods } from '../../actions/actions';
 import carto, { filter, source, style, layer  } from '@carto/carto.js';
-import Category from '.././widgets/Category'
-import Histogram from '.././widgets/Histogram'
+import Button from '.././widgets/Button'
 import Formula from '.././widgets/Formula'
-import Range from '.././widgets/Range'
-import Export from '.././widgets/Export'
 import '@carto/airship-style';
+import L from 'leaflet'
 
 class LeftBar extends Component {
 
@@ -17,12 +15,16 @@ class LeftBar extends Component {
       this.state = {
         ...props
       }
+    this.moveMap = this.moveMap.bind(this);
   }
 
   state = {
     size: null
   };
 
+  moveMap() {
+    this.props.map.flyTo([39.8283459, -98.5794797], 4);
+  }
 
 
   componentDidMount() {
@@ -35,6 +37,12 @@ class LeftBar extends Component {
     return (
       <aside className={this.state.size}>
       <div className="as-m--24">
+      <Button
+        name='CLICK'
+        action={this.moveMap}
+        type='secondary'
+        size=''
+      />
       <div className="as-p--16">
       <Formula
         title='Employees Injured'

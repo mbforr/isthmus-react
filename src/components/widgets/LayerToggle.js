@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import carto from '@carto/carto.js';
 import { storeLayers, toggleLayer } from '../../actions/actions';
-
+import '@carto/airship-style';
 
 class LayerToggle extends Component {
 
@@ -36,10 +36,10 @@ class LayerToggle extends Component {
   render() {
     return (
       <div>
-        <span className="as-display--block as-p--4">
+        <span className="as-display--block">
           <p className="as-body">{this.props.layer.name}</p>
         </span>
-        <span className="as-display--block as-p--4">
+        <span className="as-display--block">
           <as-switch checked ref={node => { this.widget = node; }}></as-switch>
         </span>
       </div>
