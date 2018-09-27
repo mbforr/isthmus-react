@@ -60,6 +60,7 @@ class LeftBar extends Component {
         title='Search'
         description='Search text'
         id='search'
+        column='narrative'
       />
       </div>
       </div>

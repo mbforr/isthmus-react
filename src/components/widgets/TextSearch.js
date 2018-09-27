@@ -13,9 +13,7 @@ class TextSearch extends Component {
   };
 
   componentDidMount() {
-    // this.addDataview();
     this.setupEvents();
-
   }
 
   setupEvents() {
@@ -27,11 +25,14 @@ class TextSearch extends Component {
 
         clearTimeout(timeout);
 
+
+
         timeout = setTimeout(() => {
-            console.log('Input Value:', textInput.value);
-            this.setState({ value: textInput.value })
+            const text = textInput.value
+            const query = `%(${text.toLowerCase()}|${text.toUpperCase()}|${text})%`
+            this.setState({ value: query })
             this.setUpFilter();
-        }, 200);
+        }, 500);
 
     };
   }
@@ -39,11 +40,13 @@ class TextSearch extends Component {
   createFilter() {
     const filter = new carto.filter.Category('narrative', { similarTo: this.state.value });
     this.props.layers.railaccidents.source.addFilter(filter);
-    this.setState({  filter });
+    this.setState({ filter });
   }
 
   updateFilter() {
-    this.filter.setFilters({ similarTo: this.state.value });
+    const { filter } = this.state;
+    this.props.layers.railaccidents.source.removeFilter(filter);
+    this.createFilter()
   }
 
   setUpFilter() {
@@ -53,42 +56,8 @@ class TextSearch extends Component {
       ? this.createFilter()
       : this.updateFilter();
   }
- //
- //  componentDidUpdate(prevProps) {
- //    const bboxFilter = new carto.filter.BoundingBoxLeaflet(this.props.map)
- //
- //    if(prevProps !== this.props) {
- //      this.dataView.addFilter(this.props.boundingbox);
- //    }
- //  }
- //
- //  addDataview() {
- //    this.dataView = new carto.dataview.Formula(this.props.layer, this.props.column, {
- //      operation: this.props.operation
- //    });
- //
- //    this.dataView.on('dataChanged', newData => {
- //      let formattedData
- //      if (this.props.round === true && this.props.currency === false) {
- //        formattedData = newData.result.toLocaleString('en-US', {maximumFractionDigits: 0})
- //      } else if (this.props.currency === true && this.props.round === false) {
- //        formattedData = newData.result.toLocaleString('en-US', {maximumFractionDigits: 2, style: 'currency', currency: 'USD'})
- //      } else if (this.props.currency === true && this.props.round === true) {
- //        formattedData = newData.result.toLocaleString('en-US', {maximumFractionDigits: 0, minimumFractionDigits: 0, style: 'currency', currency: 'USD'})
- //      } else {
- //        formattedData = newData.result.toLocaleString('en-US', {maximumFractionDigits: 2})
- //      }
- //
- //      this.setState({ data: formattedData })
- //
- //    });
- //
- //    this.props.client.addDataview(this.dataView);
- // }
-
 
   render() {
-    // const { data } = this.state;
     const { title, description, id } = this.props;
 
     return (
