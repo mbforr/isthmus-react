@@ -6,6 +6,7 @@ import carto, { filter, source, style, layer  } from '@carto/carto.js';
 import Button from '.././widgets/Button'
 import Formula from '.././widgets/Formula'
 import TextSearch from '.././widgets/TextSearch'
+import Input from '.././layout/Input'
 import '@carto/airship-style';
 import L from 'leaflet'
 
@@ -55,14 +56,17 @@ class LeftBar extends Component {
         operation={carto.operation.SUM}
       />
       </div>
-      <div className="as-p--16">
       <TextSearch
         title='Search'
         description='Search text'
         id='search'
         column='narrative'
       />
-      </div>
+      <Input
+        id='input'
+        placeholder='Text Input'
+        value=''
+      />
       </div>
       </aside>
     )

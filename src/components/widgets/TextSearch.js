@@ -25,8 +25,6 @@ class TextSearch extends Component {
 
         clearTimeout(timeout);
 
-
-
         timeout = setTimeout(() => {
             const text = textInput.value
             const query = `%(${text.toLowerCase()}|${text.toUpperCase()}|${text})%`
@@ -61,7 +59,7 @@ class TextSearch extends Component {
     const { title, description, id } = this.props;
 
     return (
-      <div>
+      <div className="as-p--16">
         <h4 className="as-subheader as-font--medium">{title}</h4>
         <p className="as-body">{description}</p>
         <input className="as-input" id={id} type="text" placeholder="Hello there"></input>
