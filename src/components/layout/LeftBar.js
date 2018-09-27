@@ -4,6 +4,10 @@ import { connect } from 'react-redux';
 import { setNeighbourhoods } from '../../actions/actions';
 import carto, { filter, source, style, layer  } from '@carto/carto.js';
 import Button from '.././widgets/Button'
+import LinkButton from '.././widgets/LinkButton'
+import Badge from '.././widgets/Badge'
+import IconBadge from '.././widgets/IconBadge'
+import InputButton from '.././widgets/InputButton'
 import Formula from '.././widgets/Formula'
 import TextSearch from '.././widgets/TextSearch'
 import Input from '.././layout/Input'
@@ -39,6 +43,28 @@ class LeftBar extends Component {
     return (
       <aside className={this.state.size} data-name={this.props.name}>
       <div className="as-m--24">
+      <LinkButton
+        name='CARTO Website'
+        link='https://carto.com'
+        type='primary'
+        size=''
+      />
+      <InputButton
+        name='Input Button'
+        type='primary'
+        size='l'
+      />
+      <Badge
+        color='green'
+        name='Badge Component'
+        text='as-color--type-02'
+      />
+      <IconBadge
+        color='success'
+        name='Icon Badge Component'
+        text='as-color--type-04'
+        icon='as-icon-info'
+      />
       <Button
         name='Center Map'
         action={this.moveMap}
