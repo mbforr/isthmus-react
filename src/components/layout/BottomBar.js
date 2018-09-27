@@ -26,8 +26,10 @@ class BottomBar extends Component {
             <Formula
               title='Total Damage'
               description='Maximum total damage in USD for accidents in view'
-              round={true}
+              round={false}
               currency={true}
+              locale='es-ES'
+              currencyType='EUR'
               layer={this.props.layers.railaccidents.source}
               column='total_damage'
               operation={carto.operation.MAX}

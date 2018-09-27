@@ -77,6 +77,8 @@ class LeftBar extends Component {
         description='Total number of employee injuries'
         round={true}
         currency={false}
+        locale='en-US'
+        currencyType='USD'
         layer={this.props.layers.railaccidents.source}
         column='rr_employees_injured'
         operation={carto.operation.SUM}

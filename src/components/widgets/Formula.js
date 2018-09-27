@@ -26,6 +26,9 @@ class Formula extends Component {
   }
 
   addDataview() {
+
+    const { locale, currencyType } = this.props;
+
     this.dataView = new carto.dataview.Formula(this.props.layer, this.props.column, {
       operation: this.props.operation
     });
@@ -33,13 +36,13 @@ class Formula extends Component {
     this.dataView.on('dataChanged', newData => {
       let formattedData
       if (this.props.round === true && this.props.currency === false) {
-        formattedData = newData.result.toLocaleString('en-US', {maximumFractionDigits: 0})
+        formattedData = newData.result.toLocaleString(locale, {maximumFractionDigits: 0})
       } else if (this.props.currency === true && this.props.round === false) {
-        formattedData = newData.result.toLocaleString('en-US', {maximumFractionDigits: 2, style: 'currency', currency: 'USD'})
+        formattedData = newData.result.toLocaleString(locale, {maximumFractionDigits: 2, style: 'currency', currency: currencyType})
       } else if (this.props.currency === true && this.props.round === true) {
-        formattedData = newData.result.toLocaleString('en-US', {maximumFractionDigits: 0, minimumFractionDigits: 0, style: 'currency', currency: 'USD'})
+        formattedData = newData.result.toLocaleString(locale, {maximumFractionDigits: 0, minimumFractionDigits: 0, style: 'currency', currency: currencyType})
       } else {
-        formattedData = newData.result.toLocaleString('en-US', {maximumFractionDigits: 2})
+        formattedData = newData.result.toLocaleString(locale, {maximumFractionDigits: 2})
       }
 
       this.setState({ data: formattedData })
