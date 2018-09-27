@@ -57,15 +57,15 @@ class LeftBar extends Component {
       />
       </div>
       <TextSearch
-        title='Search'
-        description='Search text'
+        title='Accident Description'
+        description='Search text in the accident description field'
         id='search'
+        placeholder='Search...'
         column='narrative'
       />
       <Input
         id='input'
         placeholder='Text Input'
-        value=''
       />
       </div>
       </aside>

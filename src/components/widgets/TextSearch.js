@@ -36,7 +36,7 @@ class TextSearch extends Component {
   }
 
   createFilter() {
-    const filter = new carto.filter.Category('narrative', { similarTo: this.state.value });
+    const filter = new carto.filter.Category(this.props.column, { similarTo: this.state.value });
     this.props.layers.railaccidents.source.addFilter(filter);
     this.setState({ filter });
   }
@@ -58,11 +58,12 @@ class TextSearch extends Component {
   render() {
     const { title, description, id } = this.props;
 
+
     return (
       <div className="as-p--16">
         <h4 className="as-subheader as-font--medium">{title}</h4>
         <p className="as-body">{description}</p>
-        <input className="as-input" id={id} type="text" placeholder="Hello there"></input>
+        <input className="as-input" id={id} type="text" placeholder={this.props.placeholder}></input>
       </div>
     );
   }

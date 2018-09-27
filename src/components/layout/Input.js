@@ -15,16 +15,6 @@ class Input extends Component {
   render() {
 
     const { id, required } = this.props;
-    let requiredValue
-    console.log(required)
-
-    if (required === true) {
-      requiredValue = `required`
-    } else {
-      requiredValue = ``
-    }
-
-    console.log(requiredValue)
 
     return (
       <div className="as-p--16">
@@ -33,7 +23,6 @@ class Input extends Component {
           id={id}
           type="text"
           placeholder={this.props.placeholder}
-          value={this.props.value}
           ></input>
       </div>
     );
