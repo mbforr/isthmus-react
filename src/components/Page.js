@@ -1,5 +1,5 @@
 import React from 'react';
-import CARTOMapNew from './CARTOMapNew';
+import CARTOMap from './CARTOMap';
 import Header from './layout/Header'
 import RightBar from './layout/RightBar'
 import LeftBar from './layout/LeftBar'
@@ -14,7 +14,7 @@ const Page = () => (
       <div className="as-content">
         <main className="as-main">
           <div className="as-map-area">
-            <CARTOMapNew />
+            <CARTOMap />
             <Panel
               vertical='top'
               horizontal='left'

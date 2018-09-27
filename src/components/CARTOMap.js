@@ -15,7 +15,7 @@ import '@carto/airship-style';
 
 const { BASEMAP, BASEMAP_LABELS, CENTER, ZOOM } = C;
 
-class CARTOMapNew extends Component {
+class CARTOMap extends Component {
 
   constructor(props) {
     super(props);
@@ -112,7 +112,7 @@ class CARTOMapNew extends Component {
     const { layers } = this.props;
     const hasLayers = Object.keys(layers).length > 0;
 
-    return (      
+    return (
         <div id="map"></div>
     );
   }
@@ -134,4 +134,4 @@ const mapDispatchToProps = dispatch => ({
   changeCartoBBox: boundingbox => dispatch(changeCartoBBox(boundingbox))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CARTOMapNew);
+export default connect(mapStateToProps, mapDispatchToProps)(CARTOMap);
