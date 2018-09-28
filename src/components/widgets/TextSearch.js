@@ -37,19 +37,18 @@ class TextSearch extends Component {
 
   createFilter() {
     const filter = new carto.filter.Category(this.props.column, { similarTo: this.state.value });
-    this.props.layers.railaccidents.source.addFilter(filter);
+    this.props.layer.addFilter(filter);
     this.setState({ filter });
   }
 
   updateFilter() {
     const { filter } = this.state;
-    this.props.layers.railaccidents.source.removeFilter(filter);
+    this.props.layer.removeFilter(filter);
     this.createFilter()
   }
 
   setUpFilter() {
     const { filter, value } = this.state;
-    console.log(value)
     !filter
       ? this.createFilter()
       : this.updateFilter();
@@ -73,14 +72,11 @@ class TextSearch extends Component {
 const mapStateToProps = state => ({
   client: state.client,
   map: state.map,
-  filters: state.filters,
   layers: state.layers,
   viewport: state.viewport,
   boundingbox: state.boundingbox
 });
 
-const mapDispatchToProps = dispatch => ({
-  setNeighbourhoods: selected => dispatch(setNeighbourhoods(selected)),
-});
+const mapDispatchToProps = dispatch => ({ });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TextSearch);

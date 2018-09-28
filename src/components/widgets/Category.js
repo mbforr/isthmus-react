@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import carto from '@carto/carto.js';
 
-
 class Category extends Component {
 
   static defaultProps = {
@@ -63,12 +62,10 @@ class Category extends Component {
 
     this.dataView.on('dataChanged', ({ categories }) => this.setState({ categories }));
 
-    console.log('CATEGORY ', this.state)
     this.props.client.addDataview(this.dataView);
  }
 
   _createFilter() {
-    console.log('_createFilter RAN')
     const filter = new carto.filter.Category(this.props.column, { in: this.state.selection });
     this.props.categoryLayer.addFilter(filter);
     this.setState({  filter });
@@ -109,18 +106,18 @@ class Category extends Component {
 
 
   render() {
-    const { heading, description } = this.props;
+    const { title, description } = this.props;
     const { categories, filter, selection } = this.state;
 
-    //console.log()
+    console.log(title)
 
     const showApplyButton = selection.length > 0 && !filter;
 
     return (
-      <div>
+      <div className="as-p--16">
       <as-category-widget
         ref={node => { this.widget = node; }}
-        heading={heading}
+        heading={title}
         description={description}
         categories={categories}
         onSelectedChanged={this.onSelectedChanged}

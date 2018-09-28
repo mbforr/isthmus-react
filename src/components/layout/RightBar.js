@@ -50,6 +50,8 @@ class RightBar extends Component {
         description='Average total damage in USD for accidents in view'
         round={true}
         currency={true}
+        locale='en-US'
+        currencyType='USD'
         layer={this.props.layers.railaccidents.source}
         column='total_damage'
         operation={carto.operation.AVG}
@@ -63,16 +65,14 @@ class RightBar extends Component {
         name='Export Data'
       />
       </div>
-      <div className="as-p--16">
       <Category
-        heading='State'
+        title='State'
         description='Total damage for each railroad company in USD'
         categoryLayer={this.props.layers.railaccidents.source}
         column='state'
         operation={carto.operation.SUM}
         operationColumn='equipment_damage'
       />
-      </div>
       <div className="as-p--16">
       <Histogram
         title='Hour'

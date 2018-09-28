@@ -22,6 +22,7 @@ class LeftBar extends Component {
         ...props
       }
     this.moveMap = this.moveMap.bind(this);
+
   }
 
   state = {
@@ -33,15 +34,12 @@ class LeftBar extends Component {
   }
 
 
-  componentDidMount() {
-    const z = `as-sidebar as-sidebar--${this.props.size} as-sidebar--left ${this.props.background}`;
-    this.setState({size: z})
-  }
-
   render() {
 
+    const size = `as-sidebar as-sidebar--${this.props.size} as-sidebar--left ${this.props.background}`;
+
     return (
-      <aside className={this.state.size} data-name={this.props.name}>
+      <aside className={size} data-name={this.props.name}>
       <div className="as-m--24">
       <LinkButton
         name='CARTO Website'
@@ -88,6 +86,7 @@ class LeftBar extends Component {
         title='Accident Description'
         description='Search text in the accident description field'
         id='search'
+        layer={this.props.layers.railaccidents.source}
         placeholder='Search...'
         column='narrative'
       />

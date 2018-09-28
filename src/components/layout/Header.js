@@ -1,8 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import carto from '@carto/carto.js';
 import HeaderToggle from './header/HeaderToggle'
 import HeaderLink from './header/HeaderLink'
 import Avatar from './Avatar'
@@ -51,7 +49,6 @@ class Header extends Component {
 const mapStateToProps = state => ({
   client: state.client,
   map: state.map,
-  filters: state.filters,
   layers: state.layers,
   viewport: state.viewport,
   boundingbox: state.boundingbox
