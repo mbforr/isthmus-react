@@ -8,6 +8,8 @@ import LinkButton from '.././widgets/LinkButton'
 import Badge from '.././widgets/Badge'
 import IconBadge from '.././widgets/IconBadge'
 import InputButton from '.././widgets/InputButton'
+import Import from '.././widgets/Import'
+
 import Formula from '.././widgets/Formula'
 import TextSearch from '.././widgets/TextSearch'
 import Input from '.././layout/Input'
@@ -41,6 +43,7 @@ class LeftBar extends Component {
     return (
       <aside className={size} data-name={this.props.name}>
       <div className="as-m--24">
+      <Import />
       <LinkButton
         name='CARTO Website'
         link='https://carto.com'

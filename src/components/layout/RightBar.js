@@ -60,7 +60,7 @@ class RightBar extends Component {
       <div className="as-p--16">
       <Export
         layer={this.props.layers.railaccidents.source}
-        format='shp'
+        format='csv'
         filename='rail_data'
         name='Export Data'
       />

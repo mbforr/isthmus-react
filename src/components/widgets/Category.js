@@ -72,7 +72,6 @@ class Category extends Component {
   }
 
   _updateFilter() {
-    console.log('_updateFilter RAN')
     this.filter.setFilters({ in: this.state.selection });
   }
 
@@ -108,8 +107,6 @@ class Category extends Component {
   render() {
     const { title, description } = this.props;
     const { categories, filter, selection } = this.state;
-
-    console.log(title)
 
     const showApplyButton = selection.length > 0 && !filter;
 
