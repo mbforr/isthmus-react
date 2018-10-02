@@ -38,12 +38,32 @@ class LeftBar extends Component {
 
   render() {
 
+    const cartocss = `#layer {
+        marker-width: 15;
+        marker-fill: #EE4D5A;
+        marker-fill-opacity: 0.9;
+        marker-line-color: #FFFFFF;
+        marker-line-width: 1;
+        marker-line-opacity: 1;
+        marker-placement: point;
+        marker-type: ellipse;
+        marker-allow-overlap: true;
+      }`
+
+    const sql = `SELECT * from a WHERE railroad = 'UP'`
+
     const size = `as-sidebar as-sidebar--${this.props.size} as-sidebar--left ${this.props.background}`;
 
     return (
       <aside className={size} data-name={this.props.name}>
       <div className="as-m--24">
-      <Import />
+      <Import
+        title="Import Data Layer"
+        description="Import data to add to the map"
+        cartocss={cartocss}
+        sql={sql}
+        back={true}
+      />
       <LinkButton
         name='CARTO Website'
         link='https://carto.com'

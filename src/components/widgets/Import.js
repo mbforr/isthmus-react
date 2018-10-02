@@ -21,9 +21,9 @@ class Import extends Component {
   }
 
   state = {
-    description: '',
     selectedFile: '',
     fileName: null,
+    running: false,
     status: null,
     table: null,
     error: null,
@@ -48,6 +48,7 @@ class Import extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
+    this.setState({ running: true })
     const { description, selectedFile } = this.state;
     let formData = new FormData();
     formData.append('description', description);
@@ -58,27 +59,23 @@ class Import extends Component {
         this.setState({ status: result.data.success })
         this.setState({ table: result.data.table })
         this.setState({ error: null })
-        console.log(this.state.status)
+        this.setState({ running: false })
 
-        const source = new carto.source.Dataset(result.data.table);
+        let query
+        if (this.props.sql !== false) {
+          query = `WITH a AS (SELECT * FROM ${result.data.table}) ${this.props.sql}`
+
+        } else {
+          query = `SELECT * FROM ${result.data.table}`
+        }
+
+        const source = new carto.source.SQL(query);
 
         /*
           Add in the ability to do SQL and other options/events here from the props
         */
 
-        const style = new carto.style.CartoCSS(`
-          #layer {
-            marker-width: 7;
-            marker-fill: #EE4D5A;
-            marker-fill-opacity: 0.9;
-            marker-line-color: #FFFFFF;
-            marker-line-width: 1;
-            marker-line-opacity: 1;
-            marker-placement: point;
-            marker-type: ellipse;
-            marker-allow-overlap: true;
-          }
-        `);
+        const style = new carto.style.CartoCSS(this.props.cartocss);
         const layer = new carto.layer.Layer(source, style);
 
         /*
@@ -88,22 +85,27 @@ class Import extends Component {
         this.props.client.addLayer(layer);
         this.props.client.getLeafletLayer().addTo(this.props.map);
 
+
+
+        if (this.props.back === true) {
+          layer.bringToBack();
+        }
+
       })
       .catch((error) => {
         this.setState({ status: false })
         this.setState({ table: null })
         this.setState({ error: error.message })
-        console.log(error)
       })
   }
 
   render() {
 
-    const { description, selectedFile, table, error, hidden, fileName } = this.state;
+    const { selectedFile, table, error, hidden, fileName, running } = this.state;
 
     const responseStatus = this.state.status
 
-    console.log(this.state)
+    const { title, description } = this.props;
 
     let alert
 
@@ -151,7 +153,11 @@ class Import extends Component {
         <form onSubmit={this.onSubmit}>
         <div className="as-p--8">
         <div className="as-p--8">
-        <label class="fileContainer">
+          <h4 className="as-subheader as-font--medium">{title}</h4>
+          <p className="as-body">{description}</p>
+        </div>
+        <div className="as-p--8">
+        <label className="fileContainer">
             <i aria-hidden className="as-icon-arrow-up"> </i>
             {!fileName ? '  Import' : `  ${fileName}`}
             <input type="file" name="selectedFile" onChange={this.onChange}/>
@@ -161,7 +167,9 @@ class Import extends Component {
         <div className="as-p--8">
         <button
           type="submit"
-          className="as-btn as-btn--secondary">Submit</button>
+          className="as-btn as-btn--secondary">
+          {running === true ? <span class="as-loading as-loading--s"> <svg viewBox="0 0 50 50"> <circle cx="25" cy="25" r="20" fill="none" /> </svg> </span> : 'Submit'}
+        </button>
         </div>
         </div>
         </form>
