@@ -39,9 +39,9 @@ app.post('/', upload.single('selectedFile'), (req, res) => {
      privacy: 'public'
    })
    .error((error) => {
-     console.log('Error! ', error)
-     res.status(500).json({ success: false, table: null, error: error })
-     res.send()
+     console.log('Error! ', error.title)
+     // res.status(500).json({ success: false, table: null, error: error })
+     res.send(error)
    })
    .done((table_name) => {
      console.log('Table ' + table_name + ' has been created!');

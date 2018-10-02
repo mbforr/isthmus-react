@@ -48,3 +48,63 @@ body {
   width: 100%;
   z-index: 0;
 }
+
+.customInput {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.customInput + label {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  transition: background-color .2s;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  background-color: var(--as-color-primary,#1785fb);
+  color: var(--as-color-ui-01,#fff);
+  font: 12px/20px var(--font-family-base,Roboto,sans-serif);
+  cursor: pointer;
+}
+
+
+
+.fileContainer {
+    overflow: hidden;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    transition: background-color .2s;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    background-color: var(--as-color-primary,#1785fb);
+    color: var(--as-color-ui-01,#fff);
+    font: 12px/20px var(--font-family-base,Roboto,sans-serif);
+    cursor: pointer;
+}
+
+.fileContainer [type=file] {
+    cursor: pointer;
+    display: block;
+    font-size: 999px;
+    filter: alpha(opacity=0);
+    min-height: 100%;
+    min-width: 100%;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+}
+
+.fileContainer:hover {
+  background-color: var(--as-button-primary-color-focus, #0353a9); }
+.fileContainer:active {
+  background-color: var(--as-button-primary-color-focus, #012245); }

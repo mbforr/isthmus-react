@@ -17,25 +17,29 @@ class Import extends Component {
       this.state = {
         ...props
       }
+      this.toggleHidden = this.toggleHidden.bind(this);
   }
 
   state = {
     description: '',
     selectedFile: '',
+    fileName: null,
     status: null,
     table: null,
     error: null,
-    hidden: false,
+    hidden: true
   };
 
   toggleHidden() {
     this.setState({ hidden: !this.state.hidden })
+    this.setState({ status: null })
   }
 
   onChange = (e) => {
     switch (e.target.name) {
       case 'selectedFile':
         this.setState({ selectedFile: e.target.files[0] });
+        this.setState({ fileName: e.target.files[0].name });
         break;
       default:
         this.setState({ [e.target.name]: e.target.value });
@@ -53,9 +57,8 @@ class Import extends Component {
       .then((result) => {
         this.setState({ status: result.data.success })
         this.setState({ table: result.data.table })
-        this.setState({ error: result.data.error })
-        this.toggleHidden();
-        console.log(result)
+        this.setState({ error: null })
+        console.log(this.state.status)
 
         const source = new carto.source.Dataset(result.data.table);
 
@@ -86,13 +89,21 @@ class Import extends Component {
         this.props.client.getLeafletLayer().addTo(this.props.map);
 
       })
+      .catch((error) => {
+        this.setState({ status: false })
+        this.setState({ table: null })
+        this.setState({ error: error.message })
+        console.log(error)
+      })
   }
 
   render() {
 
-    const { description, selectedFile, table, error, hidden } = this.state;
+    const { description, selectedFile, table, error, hidden, fileName } = this.state;
 
     const responseStatus = this.state.status
+
+    console.log(this.state)
 
     let alert
 
@@ -121,7 +132,8 @@ class Import extends Component {
               </div>
               <div className="as-flag__content">
                 <h4 className="as-body as-color--type-01">Error on import</h4>
-                <p className="as-body as-color--type-03">There was an error with your import: {error}</p>
+                <p className="as-body as-color--type-03">There was an error with your import!</p>
+                <p className="as-body as-color--type-03">{error}</p>
               </div>
               <div className="as-flag__icon">
                 <button className="as-flag__button" onClick={this.toggleHidden}>
@@ -130,7 +142,7 @@ class Import extends Component {
               </div>
             </div>
             </div>
-    } else if (hidden === true) {
+    } else if (responseStatus === null ) {
       alert = null
     }
 
@@ -139,17 +151,17 @@ class Import extends Component {
         <form onSubmit={this.onSubmit}>
         <div className="as-p--8">
         <div className="as-p--8">
-        <input
-          type="file"
-          name="selectedFile"
-          className="as-btn as-btn--secondary"
-          onChange={this.onChange}
-        />
+        <label class="fileContainer">
+            <i aria-hidden className="as-icon-arrow-up"> </i>
+            {!fileName ? '  Import' : `  ${fileName}`}
+            <input type="file" name="selectedFile" onChange={this.onChange}/>
+        </label>
+
         </div>
         <div className="as-p--8">
         <button
           type="submit"
-          class="as-btn as-btn--primary">Submit</button>
+          className="as-btn as-btn--secondary">Submit</button>
         </div>
         </div>
         </form>
