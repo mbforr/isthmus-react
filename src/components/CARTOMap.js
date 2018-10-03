@@ -88,7 +88,7 @@ class CARTOMap extends Component {
 
     // Labels need to be added after the layers
     L.tileLayer(BASEMAP_LABELS).addTo(this.props.map);
-
+    console.log(cartoLayers)
     this.props.storeLayers(cartoLayers)
   }
 

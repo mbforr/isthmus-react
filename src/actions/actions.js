@@ -4,6 +4,12 @@ export const storeLayers = layers => ({
   layers,
 });
 
+export const ADD_LAYER = '@Layers/ADD';
+export const addLayer = layer => ({
+  type: ADD_LAYER,
+  layer,
+});
+
 export const SET_MAP = '@Map/SET';
 export const setMap = map => ({
   type: SET_MAP,

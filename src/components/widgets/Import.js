@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import LayerToggle from '../widgets/LayerToggle'
+import { addLayer } from '../../actions/actions';
 import '@carto/airship-style';
 import axios from 'axios';
 import C from '../../data/C'
@@ -62,9 +63,9 @@ class Import extends Component {
         this.setState({ running: false })
 
         let query
+
         if (this.props.sql !== false) {
           query = `WITH a AS (SELECT * FROM ${result.data.table}) ${this.props.sql}`
-
         } else {
           query = `SELECT * FROM ${result.data.table}`
         }
@@ -82,14 +83,22 @@ class Import extends Component {
           Look at the Redux actions and see if it can dispatc the layer into the store
         */
 
+        const visible = true
+
         this.props.client.addLayer(layer);
         this.props.client.getLeafletLayer().addTo(this.props.map);
-
-
 
         if (this.props.back === true) {
           layer.bringToBack();
         }
+
+        const { cartocss } = this.props
+        const name = this.state.table
+
+        const reduxLayer = { [name]: { cartocss, layer, name, query, source, style, visible } }
+        console.log (reduxLayer)
+
+        this.props.addLayer(reduxLayer)
 
       })
       .catch((error) => {
@@ -189,7 +198,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setNeighbourhoods: selected => dispatch(setNeighbourhoods(selected)),
+  addLayer: layer => dispatch(addLayer(layer))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Import);
