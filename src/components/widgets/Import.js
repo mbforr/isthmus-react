@@ -96,7 +96,6 @@ class Import extends Component {
         const name = this.state.table
 
         const reduxLayer = { [name]: { cartocss, layer, name, query, source, style, visible } }
-        console.log (reduxLayer)
 
         this.props.addLayer(reduxLayer)
 

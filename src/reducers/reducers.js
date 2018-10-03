@@ -68,12 +68,9 @@ const DEFAULT_LAYERS = Object.keys(index).reduce((all, layerName) => {
 export const layers = (state = DEFAULT_LAYERS, action) => {
   switch (action.type) {
     case actions.STORE_LAYERS:
-      console.log(action.layers)
       return action.layers;
 
     case actions.ADD_LAYER:
-      console.log(action.layer)
-      console.log(typeof action.layer)
       const l = action.layer
       return {
         ...state, ...l
