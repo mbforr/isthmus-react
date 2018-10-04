@@ -30,8 +30,6 @@ app.post('/', upload.single('selectedFile'), (req, res) => {
 
   console.log("upload");
 
-  let cartoTableName = 'adkfjhdaskhfakdjshfkladhsflkashdf'
-
   const fileName = req.file.filename;
 
   importer

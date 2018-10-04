@@ -60,6 +60,7 @@ class LeftBar extends Component {
       <Import
         title="Import Data Layer"
         description="Import data to add to the map"
+        page="/"
         cartocss={cartocss}
         sql={sql}
         back={true}

@@ -55,7 +55,7 @@ class Import extends Component {
     formData.append('description', description);
     formData.append('selectedFile', selectedFile);
 
-    axios.post('/', formData)
+    axios.post(this.props.page, formData)
       .then((result) => {
         this.setState({ status: result.data.success })
         this.setState({ table: result.data.table })
@@ -80,7 +80,7 @@ class Import extends Component {
         const layer = new carto.layer.Layer(source, style);
 
         /*
-          Look at the Redux actions and see if it can dispatc the layer into the store
+          Look at the Redux actions and see if it can dispatch the layer into the store
         */
 
         const visible = true
@@ -96,6 +96,7 @@ class Import extends Component {
         const name = this.state.table
 
         const reduxLayer = { [name]: { cartocss, layer, name, query, source, style, visible } }
+        console.log (reduxLayer)
 
         this.props.addLayer(reduxLayer)
 
