@@ -23,7 +23,7 @@ class BottomBar extends Component {
       <footer className={background} data-name={this.props.name}>
         <div className="as-container as-container--scrollable">
           <section className="as-box as-box--large">
-            <Formula
+            {/*<Formula
               title='Total Damage'
               description='Maximum total damage in USD for accidents in view'
               round={false}
@@ -33,7 +33,7 @@ class BottomBar extends Component {
               layer={this.props.layers.railaccidents.source}
               column='total_damage'
               operation={carto.operation.MAX}
-            />
+            />*/}
           </section>
         </div>
       </footer>

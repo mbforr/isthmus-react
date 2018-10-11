@@ -57,67 +57,34 @@ class LeftBar extends Component {
     return (
       <aside className={size} data-name={this.props.name}>
       <div className="as-m--24">
-      <Import
+      {/*<Import
         title="Import Data Layer"
         description="Import data to add to the map"
         page="/"
         cartocss={cartocss}
         sql={sql}
         back={true}
-      />
-      <LinkButton
+      />*/}
+      {/*<LinkButton
         name='CARTO Website'
         link='https://carto.com'
         type='primary'
         size=''
-      />
-      <InputButton
-        name='Input Button'
-        type='primary'
-        size='l'
-      />
-      <Badge
-        color='green'
-        name='Badge Component'
-        text='as-color--type-02'
-      />
-      <IconBadge
-        color='success'
-        name='Icon Badge Component'
-        text='as-color--type-04'
-        icon='as-icon-info'
-      />
-      <Button
+      />*/}
+      {/*<Button
         name='Center Map'
         action={this.moveMap}
         type='secondary'
         size=''
-      />
-      <div className="as-p--16">
-      <Formula
-        title='Employees Injured'
-        description='Total number of employee injuries'
-        round={true}
-        currency={false}
-        locale='en-US'
-        currencyType='USD'
-        layer={this.props.layers.railaccidents.source}
-        column='rr_employees_injured'
-        operation={carto.operation.SUM}
-      />
-      </div>
-      <TextSearch
+      />*/}
+      {/*<TextSearch
         title='Accident Description'
         description='Search text in the accident description field'
         id='search'
         layer={this.props.layers.railaccidents.source}
         placeholder='Search...'
         column='narrative'
-      />
-      <Input
-        id='input'
-        placeholder='Text Input'
-      />
+      />*/}
       </div>
       </aside>
     )

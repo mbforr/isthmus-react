@@ -10,33 +10,33 @@ import '@carto/airship-style';
 const Page = () => (
   <as-responsive-content>
     <body className="as-app">
-      <Header />
+      {/*<Header />  */}
       <div className="as-content">
         <main className="as-main">
           <div className="as-map-area">
             <CARTOMap />
-            <Panel
+            {/*<Panel
               vertical='top'
               horizontal='left'
               background=''
               name='Controls'
-            />
+            />*/}
           </div>
-          <BottomBar
+          {/*<BottomBar
             background=''
             name='Bottom'
-          />
+          />*/}
         </main>
-        <RightBar
+        {/*<RightBar
           size='l'
           background=''
           name='Right'
-        />
-        <LeftBar
+        />*/}
+        {/*<LeftBar
           size='s'
           background=''
           name='Left'
-        />
+        />*/}
       </div>
     </body>
   </as-responsive-content>
