@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-const importer = new CartoDB.Import({user:'mforrest', api_key:'665b6d21a3b9c20906057414b7da378b519df141'});
+const importer = new CartoDB.Import({user:'username', api_key:'api_key'});
 
 app.post('/', upload.single('selectedFile'), (req, res) => {
 

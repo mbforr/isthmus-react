@@ -9,7 +9,7 @@ import Badge from '.././widgets/Badge'
 import IconBadge from '.././widgets/IconBadge'
 import InputButton from '.././widgets/InputButton'
 import Import from '.././widgets/Import'
-
+import Dropdown from '.././widgets/Dropdown'
 import Formula from '.././widgets/Formula'
 import TextSearch from '.././widgets/TextSearch'
 import Input from '.././layout/Input'
@@ -57,6 +57,7 @@ class LeftBar extends Component {
     return (
       <aside className={size} data-name={this.props.name}>
       <div className="as-m--24">
+
       <Import
         title="Import Data Layer"
         description="Import data to add to the map"
@@ -65,6 +66,7 @@ class LeftBar extends Component {
         sql={sql}
         back={true}
       />
+      <Dropdown />    
       <LinkButton
         name='CARTO Website'
         link='https://carto.com'
