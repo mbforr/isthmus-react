@@ -1,5 +1,5 @@
 import railaccidents from './railaccidents';
-// import usstates from './usstates';
+import usstates from './usstates';
 
 // import neighbourhoods from './neighbourhoods';
 
