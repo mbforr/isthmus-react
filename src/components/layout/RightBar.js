@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { setNeighbourhoods } from '../../actions/actions';
 import carto, { filter, source, style, layer  } from '@carto/carto.js';
 import Category from '.././widgets/Category'
+import CategoryVL from '.././vlwidgets/CategoryVL'
 import Histogram from '.././widgets/Histogram'
 import Formula from '.././widgets/Formula'
 import Range from '.././widgets/Range'
@@ -33,55 +34,11 @@ class RightBar extends Component {
     return (
       <aside className={this.state.size} data-name={this.props.name}>
       <div className="as-m--24">
-      <div className="as-p--16">
-      <Range
-        before=''
-        after='°F'
-        title='Temperature'
-        description='Temperature at the time of the accident'
-        layer={this.props.layers.railaccidents.source}
-        column='temp'
-        step={1}
-      />
-      </div>
-      <div className="as-p--16">
-      <Formula
-        title='Total Damage'
-        description='Average total damage in USD for accidents in view'
-        round={true}
-        currency={true}
-        locale='en-US'
-        currencyType='USD'
-        layer={this.props.layers.railaccidents.source}
-        column='total_damage'
-        operation={carto.operation.AVG}
-      />
-      </div>
-      <div className="as-p--16">
-      <Export
-        layer={this.props.layers.railaccidents.source}
-        format='csv'
-        filename='rail_data'
-        name='Export Data'
-      />
-      </div>
-      <Category
+      <CategoryVL
         title='State'
         description='Total damage for each railroad company in USD'
-        categoryLayer={this.props.layers.railaccidents.source}
-        column='state'
-        operation={carto.operation.SUM}
-        operationColumn='equipment_damage'
       />
-      <div className="as-p--16">
-      <Histogram
-        title='Hour'
-        description='Hour at the time of the accident'
-        layer={this.props.layers.railaccidents.source}
-        column='hour'
-        bins={12}
-      />
-      </div>
+
       </div>
       </aside>
 

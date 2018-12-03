@@ -1,5 +1,6 @@
 import React from 'react';
 import CARTOMap from './CARTOMap';
+import CARTOVLMap from './CARTOVLMap';
 import Header from './layout/Header'
 import RightBar from './layout/RightBar'
 import LeftBar from './layout/LeftBar'
@@ -14,29 +15,29 @@ const Page = () => (
       <div className="as-content">
         <main className="as-main">
           <div className="as-map-area">
-            <CARTOMap />
-            <Panel
+            <CARTOVLMap />
+            {/* <Panel
               vertical='top'
               horizontal='left'
               background=''
               name='Controls'
-            />
+            /> */}
           </div>
-          <BottomBar
+          {/* <BottomBar
             background=''
             name='Bottom'
-          />
+          /> */}
         </main>
         <RightBar
           size='l'
           background=''
           name='Right'
         />
-        <LeftBar
+        {/* <LeftBar
           size='s'
           background=''
           name='Left'
-        />
+        /> */}
       </div>
     </body>
   </as-responsive-content>
