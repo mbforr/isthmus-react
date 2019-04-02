@@ -6,7 +6,8 @@ const C = {
     USERNAME: 'mforrest',
     API_KEY: 'default_public',
     CENTER: [33.753707, -84.389363],
-    ZOOM: 6
+    ZOOM: 6,
+    VL: true
 };
 
 export default C

@@ -3,7 +3,10 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import carto from '@carto/carto-vl'
-import '@carto/airship-style';
+// import '@carto/airship-style';
+import { addBridge } from '../../actions/actions';
+import { bridge } from '@carto/airship-bridge'
+
 
 class CategoryVL extends Component {
 
@@ -25,132 +28,36 @@ class CategoryVL extends Component {
 
   componentDidMount() {
     this._setupConfig();
-    this.setupUpdate(this.onCategoriesChanged);
-    // this.setupUpdate(this.onCategoriesChanged);
-    // this._setupEvents();
-    // this._addDataview();
   }
 
   _setupConfig() {
-    //this works fine
-    const { layer } = this.props.layers.railaccidents
+    const { layer, bridge } = this.props.layer
     const { showHeader, showClearButton, useTotalPercentage, visibleCategories } = this.props;
-    const { categories } = this.state;
     this.widget.showHeader = showHeader;
     this.widget.showClearButton = showClearButton;
     this.widget.useTotalPercentage = useTotalPercentage;
-    this.widget.visibleCategories = visibleCategories;
-    this.widget.categories = categories;
-  
+    this.widget.visibleCategories = this.props.max;
+  }
+
+  _setupBridge() {
+    this.props.layer.bridge.category(this.widget ,this.props.column, {
+      column: this.props.column,
+      readOnly: false,
+      button: this.button
+    });
+
+    const { layers } = this.props
   }
 
   componentDidUpdate(prevProps) {
-    if(prevProps !== this.props) {
-      this.setupUpdate(this.onCategoriesChanged);
-      this.handleCategoriesSelected()
+    if (this.props.layers !== prevProps.layers) {
+      this._setupBridge()
     }
   }
 
-  setupUpdate(categoriesCallback) {
-    const { layer } = this.props.layers.railaccidents
-
-    if (layer.viz) {
-      const originalStyle = layer.viz.color
-      this.setState({ originalStyle: originalStyle })
-      console.log(this.state.originalStyle)
-    }
-    
-    layer.on('updated', () => {
-      const cat = layer.viz.variables.categories.value;
-      categoriesCallback && this.onCategoriesChanged(cat);
-    }); 
-  }
-
-  onCategoriesChanged(categories) {
-    const data = categories.map((category) => {
-      const { x, y } = category;
-      return {
-        name: x,
-        value: y
-      };
-    });
-    
-    this.setState({ categories: data })
-    this.widget.categories = this.state.categories
-  }
-
-  handleCategoriesSelected () {
-    this.widget.addEventListener('categoriesSelected', (event) => {
-      this.updateFilter(event.detail);
-    });
-  }
-
-  updateFilter(selected) {
-    if (selected.length > 0) {
-      const formattedData = selected.map((selected) => {
-        return `'${selected}'`;
-      });
-      // selected = `filter: $railroad in [${formattedData.join(',')}]`;
-      selected = `$railroad in [${formattedData.join(',')}]`;
-    } else {
-      selected = '';
-    }
-    this.applyFilter(selected);
-  }
-
-  applyFilter(updateFilter) {
-    const { viz, style, layer, source } = this.props.layers.railaccidents
-
-    const color = `ramp(viewportQuantiles($total_damage, 7), sunsetdark)`;
-    const opacity = '1';
-    const stroke = `#191970`
-    let colorExp = `opacity(${color}, ${opacity})`;
-    let strokeExp = `opacity(${stroke}, ${opacity})`
-  
-    // if (!viz) {
-    //   return;
-    // }
-
-    if (updateFilter) {
-      colorExp = `opacity(${color}, ${updateFilter} * ${opacity})`;
-      strokeExp = `opacity(${stroke}, ${updateFilter} * ${opacity})`;
-      console.log(colorExp)
-      // colorExp = `
-      // width: 8
-      // color: ramp(viewportQuantiles($total_damage, 7), sunsetdark, grey)
-      // strokeWidth: 0.5
-      // ${updateFilter}
-      // strokeColor: #191970
-      // @categories: viewportHistogram($railroad, 1, 12)
-      // `
-      // const newViz = new carto.Viz(colorExp)
-      // console.log(layer.blendToViz(newViz))
-      // layer.blendToViz(newViz, 500)
-    }
-
-    if (!updateFilter) {
-      colorExp = color;
-      strokeExp = stroke;
-      // colorExp = `
-      // width: 8
-      // color: ramp(viewportQuantiles($total_damage, 7), sunsetdark, grey)
-      // strokeWidth: 0.5
-      // strokeColor: #191970
-      // @categories: viewportHistogram($railroad, 1, 12)
-      // `
-      // layer.blendToViz(viz, 500)
-    }
-
-    layer.viz.color.blendTo(colorExp)
-    layer.viz.strokeColor.blendTo(strokeExp)
-    // this.widget.clearSelection().then(() => layer.viz.color.blendTo(this.state.originalStyle))
-  }
 
   render() {
     const { title, description } = this.props;
-    const { categories, filter, selection } = this.state;
-
-    const showApplyButton = selection.length > 0 && !filter;
 
     return (
       <div className="as-p--16">
@@ -158,18 +65,13 @@ class CategoryVL extends Component {
         ref={node => { this.widget = node; }}
         heading={title}
         description={description}
-        categories={categories}
-        visibleCategories={10}
-        onSelectedChanged={this.handleCategoriesSelected}
-        showClearButton={!!filter}
+        show-clear
       />
-      { showApplyButton && (
-        <div className="as-flex as-justify-end as-mt--8">
-          <button className="as-btn as-btn--s as-btn--primary" onClick={this.onApplySelection}>
-            Apply selection
-          </button>
-        </div>
-      )}
+      <button 
+        ref={node => { this.button = node; }}
+        className="as-btn as-btn--primary"
+        >Apply
+      </button>
       </div>
     );
   }
@@ -186,7 +88,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setNeighbourhoods: selected => dispatch(setNeighbourhoods(selected)),
+  addBridge: layers => dispatch(addBridge(layers))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryVL);

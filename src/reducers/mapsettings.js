@@ -31,21 +31,6 @@ export default (state = mapSettingsDefaultState, action) => {
         ...state,
         viewport: action.viewport
       };
-    case 'GET_TARGET_STORE':
-      return {
-        ...state,
-        analyzedStore: action.store
-      };
-    case 'GET_FOCUSED_TAB':
-      return {
-        ...state,
-        focusedTab: action.tab
-      };
-    case 'SET_CATEGORY':
-    return {
-      ...state,
-      filters: [...state.filters, action.category]
-    };
     case 'SET_MAP':
     return {
       ...state,

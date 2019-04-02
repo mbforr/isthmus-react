@@ -1,23 +1,40 @@
-import carto from '@carto/carto.js';
 import * as actions from '../actions/actions';
 import C from '../data/C'
 import L from 'leaflet';
 import index from '../data/layers/index';
+import VLindex from '../data/vectorlayers/VLindex';
+import mapboxgl from 'mapbox-gl'
+import * as cartoVL from '@carto/carto-vl'
+import * as cartoJS from '@carto/carto.js'
+import { VLBridge } from '@carto/airship-bridge'
 
-// import { THEME } from './constants'
+const carto = C.VL ? cartoVL : cartoJS
 
-// export const theme = (state = null, action) => {
-//   switch (action.type) {
-//     case actions.TOGGLE_THEME:
-//       return action.active ? THEME : null;
-//
-//     default:
-//       return state;
-//   }
+// let cartoClient
+
+// if (C.VL === true) {
+//   cartoClient = cartoVL.setDefaultAuth({
+//     username: C.USERNAME,
+//     apiKey: C.API_KEY
+//   });
+
+//   console.log(cartoClient)
+// } else {
+//   cartoClient = new cartoJS.carto.Client({ apiKey: C.API_KEY, username: C.USERNAME});
 // }
 
-const cartoClient = new carto.Client({ apiKey: C.API_KEY, username: C.USERNAME});
-export const client = (state = cartoClient, action) => state;
+// const CC = new cartoJS.Client({ apiKey: C.API_KEY, username: C.USERNAME});
+
+// console.log(CC)
+
+cartoVL.setDefaultAuth({
+  username: C.USERNAME,
+  apiKey: C.API_KEY
+});
+
+// console.log(CC)
+
+// export const client = (state = CC, action) => state;
 
 export const map = (state = false, action) => {
   switch (action.type) {
@@ -55,21 +72,57 @@ export const boundingbox = (state = false, action) => {
   }
 }
 
-const DEFAULT_LAYERS = Object.keys(index).reduce((all, layerName) => {
+const DEFAULT_JS_LAYERS = Object.keys(index).reduce((all, layerName) => {
   const { options, ...other} = index[layerName];
 
-  const source = new carto.source.SQL(other.query);
-  const style = new carto.style.CartoCSS(other.cartocss);
-  const layer = new carto.layer.Layer(source, style, options);
+  const source = new cartoJS.source.SQL(other.query);
+  const style = new cartoJS.style.CartoCSS(other.cartocss);
+  const layer = new cartoJS.layer.Layer(source, style, options);
 
   return { ...all, [layerName]: { source, style, layer, ...other } };
 }, {});
+
+console.log(VLindex)
+
+const DEFAULT_VL_LAYERS = Object.keys(VLindex).reduce((all, layerName) => {
+  const { options, ...other} = VLindex[layerName];
+
+  const viz = new carto.Viz(other.style);
+  const source = new carto.source.Dataset(other.table);
+  const layer = new carto.Layer(other.table, source, viz);
+
+  const bridge = new VLBridge({
+    carto: cartoVL,
+    map: map,
+    layer: layer,
+    source: source
+  });
+
+
+
+  return { ...all, [layerName]: { source, viz, layer, bridge, ...other } };
+}, {});
+
+let DEFAULT_LAYERS
+
+if (C.VL === true) {
+  DEFAULT_LAYERS = DEFAULT_VL_LAYERS
+} else {
+  DEFAULT_LAYERS = DEFAULT_JS_LAYERS
+}
 
 export const layers = (state = DEFAULT_LAYERS, action) => {
   switch (action.type) {
     case actions.STORE_LAYERS:
       console.log(action.layers)
       return action.layers;
+
+    case actions.ADD_BRIDGE:
+      Object.entries(action.layers).forEach(entry => {
+        let bridge = entry[1].bridge
+        bridge.build()
+        console.log(bridge)
+      });
 
     case actions.ADD_LAYER:
       console.log(action.layer)

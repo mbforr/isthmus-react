@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
-import { storeLayers, setMap, setBboxFilter, changeViewport, changeCartoBBox } from '../actions/actions';
-import InfoWindow from '../components/InfoWindow'
-import vectorlayers from '../data/vectorlayers';
+import { storeLayers, setMap, setBboxFilter, changeViewport, changeCartoBBox, addBridge } from '../actions/actions';
+import vectorlayers from '../data/vectorlayers/VLindex';
 import C from '../data/C'
 import '@carto/airship-style';
-
 import carto from '@carto/carto-vl'
+import { VLBridge } from '@carto/airship-bridge'
+
+
+// import carto from '@carto/carto-vl'
 import mapboxgl from 'mapbox-gl'
 
 // import './index.css';
@@ -27,9 +29,10 @@ class CARTOVLMap extends Component {
 
     const map = new mapboxgl.Map({
         container: 'map',
-        style: carto.basemaps.voyager,
+        style: carto.basemaps.darkmatter,
         center: [CENTER[1], CENTER[0]],
         zoom: ZOOM,
+        hash: true,
         scrollZoom: false,
       });
 
@@ -71,6 +74,7 @@ class CARTOVLMap extends Component {
       ])
 
       this.props.changeViewport(newViewport);
+
     });
 
 
@@ -89,21 +93,33 @@ class CARTOVLMap extends Component {
 
       layer.addTo(this.props.map, 'watername_ocean');
 
-    //   const source = new carto.source.SQL(other.query);
-    //   const style = new carto.style.CartoCSS(other.cartocss);
-    //   const layer = new carto.layer.Layer(source, style, options);
-
     //   if(options.featureClickColumns) {
     //     layer.on('featureClicked', this.openPopup.bind(this));
     //   }
 
-    //   this.props.client.getLeafletLayer().addTo(this.props.map);
+    const bridge = new VLBridge({
+      carto: carto,
+      map: this.props.map,
+      layer: layer,
+      source: source
+    });
 
-      return { ...all, [layerName]: { source, viz, layer, ...other } };
+      return { ...all, [layerName]: { source, viz, layer, bridge, ...other } };
     }, {});
 
-    console.log(cartoLayers)
-    this.props.storeLayers(cartoLayers)
+    console.log('LAYERS: ', cartoLayers)
+    this.props.storeLayers(cartoLayers) 
+    setTimeout(() => {
+      const { layers } = this.props
+      this.props.addBridge(layers)
+    }, 4000)
+     
+  }
+
+  updateBriges() {
+    
+    console.log('LAYERS: ', layers)
+    
   }
 
   componentDidUpdate(prevProps) {
@@ -145,7 +161,8 @@ const mapDispatchToProps = dispatch => ({
   setMap: map => dispatch(setMap(map)),
   setBboxFilter: bbox => dispatch(setBboxFilter(bbox)),
   changeViewport: viewport => dispatch(changeViewport(viewport)),
-  changeCartoBBox: boundingbox => dispatch(changeCartoBBox(boundingbox))
+  changeCartoBBox: boundingbox => dispatch(changeCartoBBox(boundingbox)),
+  addBridge: layers => dispatch(addBridge(layers))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CARTOVLMap);

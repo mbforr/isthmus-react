@@ -10,7 +10,8 @@ import '@carto/airship-style';
 
 const Page = () => (
   <as-responsive-content>
-    <body className="as-app">
+    <body className="as-app-body">
+    <div className="as-app">
       <Header />
       <div className="as-content">
         <main className="as-main">
@@ -39,6 +40,7 @@ const Page = () => (
           name='Left'
         /> */}
       </div>
+    </div>
     </body>
   </as-responsive-content>
 );

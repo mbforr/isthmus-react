@@ -5,6 +5,7 @@ export default {
   
     style: `
         width: 8
+        @railroad: $railroad
         color: ramp(viewportQuantiles($total_damage, 7), sunsetdark)
         strokeWidth: 0.5
         strokeColor: #191970

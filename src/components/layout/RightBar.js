@@ -5,7 +5,7 @@ import { setNeighbourhoods } from '../../actions/actions';
 import carto, { filter, source, style, layer  } from '@carto/carto.js';
 import Category from '.././widgets/Category'
 import CategoryVL from '.././vlwidgets/CategoryVL'
-import Histogram from '.././widgets/Histogram'
+import HistogramVL from '.././vlwidgets/HistogramVL'
 import Formula from '.././widgets/Formula'
 import Range from '.././widgets/Range'
 import Export from '.././widgets/Export'
@@ -33,12 +33,21 @@ class RightBar extends Component {
 
     return (
       <aside className={this.state.size} data-name={this.props.name}>
-      <div className="as-m--24">
+      <div className="as-m--24">      
       <CategoryVL
         title='State'
         description='Total damage for each railroad company in USD'
+        layer={this.props.layers.railaccidents}
+        column='railroad'
+        max={10}
       />
-
+      <HistogramVL
+        title='State'
+        description='Total damage for each railroad company in USD'
+        layer={this.props.layers.occupancy}
+        column='total_damage'
+        max={5}
+      />
       </div>
       </aside>
 

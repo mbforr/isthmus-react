@@ -10,6 +10,12 @@ export const addLayer = layer => ({
   layer,
 });
 
+export const ADD_BRIDGE = '@Layers/ADD_BRIDGE';
+export const addBridge = layers => ({
+  type: ADD_BRIDGE,
+  layers,
+});
+
 export const SET_MAP = '@Map/SET';
 export const setMap = map => ({
   type: SET_MAP,
