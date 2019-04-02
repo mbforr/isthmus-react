@@ -1,5 +1,4 @@
 import React from 'react';
-import CARTOMap from './CARTOMap';
 import CARTOVLMap from './CARTOVLMap';
 import Header from './layout/Header'
 import RightBar from './layout/RightBar'

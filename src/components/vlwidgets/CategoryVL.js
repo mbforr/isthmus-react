@@ -7,6 +7,7 @@ import carto from '@carto/carto-vl'
 import { addBridge } from '../../actions/actions';
 import { bridge } from '@carto/airship-bridge'
 
+import { defineCustomElements } from '@carto/airship-components/dist/loader';
 
 class CategoryVL extends Component {
 
@@ -40,6 +41,15 @@ class CategoryVL extends Component {
   }
 
   _setupBridge() {
+
+    // this.props.layer.bridge.category({
+    //     column: this.props.column,
+    //     readOnly: false,
+    //     widget: this.widget,
+    //     button: true
+    // })
+    console.log(this.widget)
+
     this.props.layer.bridge.category(this.widget ,this.props.column, {
       column: this.props.column,
       readOnly: false,
@@ -47,7 +57,17 @@ class CategoryVL extends Component {
     });
 
     const { layers } = this.props
+    // this.props.addBridge(this.props.layers)
+
   }
+
+
+  componentDidUpdate(prevProps) {
+    if (this.props.layers !== prevProps.layers) {
+      this._setupBridge()
+    }
+  }
+
 
   componentDidUpdate(prevProps) {
     if (this.props.layers !== prevProps.layers) {

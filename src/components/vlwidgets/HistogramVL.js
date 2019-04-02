@@ -4,10 +4,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 // import carto from '@carto/carto-vl'
 import { addBridge } from '../../actions/actions';
-// import { AsBridge } from '../../airship/packages/bridge/dist/asbridge.js'
-
-
-
 
 class HistogramVL extends Component {
 
@@ -22,8 +18,7 @@ class HistogramVL extends Component {
   };
 
   componentDidMount() {
-
-}
+  }
 
 
   _setupBridge() {
@@ -45,6 +40,8 @@ class HistogramVL extends Component {
   render() {
     const { data } = this.state;
     const { title, description } = this.props;
+
+    
 
     return (
     <div className="as-p--16">

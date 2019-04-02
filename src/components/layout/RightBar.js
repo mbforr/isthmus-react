@@ -44,7 +44,7 @@ class RightBar extends Component {
       <HistogramVL
         title='State'
         description='Total damage for each railroad company in USD'
-        layer={this.props.layers.occupancy}
+        layer={this.props.layers.railaccidents}
         column='total_damage'
         max={5}
       />

@@ -1,8 +1,8 @@
 import * as actions from '../actions/actions';
 import C from '../data/C'
 import L from 'leaflet';
-import index from '../data/layers/index';
-import VLindex from '../data/vectorlayers/VLindex';
+// import index from '../data/layers/index';
+import index from '../data/vectorlayers/index';
 import mapboxgl from 'mapbox-gl'
 import * as cartoVL from '@carto/carto-vl'
 import * as cartoJS from '@carto/carto.js'
@@ -72,56 +72,53 @@ export const boundingbox = (state = false, action) => {
   }
 }
 
-const DEFAULT_JS_LAYERS = Object.keys(index).reduce((all, layerName) => {
+// const DEFAULT_JS_LAYERS = Object.keys(index).reduce((all, layerName) => {
+//   const { options, ...other} = index[layerName];
+
+//   const source = new cartoJS.source.SQL(other.query);
+//   const style = new cartoJS.style.CartoCSS(other.cartocss);
+//   const layer = new cartoJS.layer.Layer(source, style, options);
+
+//   return { ...all, [layerName]: { source, style, layer, ...other } };
+// }, {});
+
+const DEFAULT_VL_LAYERS = Object.keys(index).reduce((all, layerName) => {
   const { options, ...other} = index[layerName];
-
-  const source = new cartoJS.source.SQL(other.query);
-  const style = new cartoJS.style.CartoCSS(other.cartocss);
-  const layer = new cartoJS.layer.Layer(source, style, options);
-
-  return { ...all, [layerName]: { source, style, layer, ...other } };
-}, {});
-
-console.log(VLindex)
-
-const DEFAULT_VL_LAYERS = Object.keys(VLindex).reduce((all, layerName) => {
-  const { options, ...other} = VLindex[layerName];
 
   const viz = new carto.Viz(other.style);
   const source = new carto.source.Dataset(other.table);
   const layer = new carto.Layer(other.table, source, viz);
 
-  const bridge = new VLBridge({
-    carto: cartoVL,
-    map: map,
-    layer: layer,
-    source: source
-  });
+  // const bridge = new VLBridge({
+  //   carto: cartoVL,
+  //   map: map,
+  //   layer: layer,
+  //   source: source
+  // });
 
-
+  const bridge = null
 
   return { ...all, [layerName]: { source, viz, layer, bridge, ...other } };
 }, {});
 
 let DEFAULT_LAYERS
 
-if (C.VL === true) {
-  DEFAULT_LAYERS = DEFAULT_VL_LAYERS
-} else {
-  DEFAULT_LAYERS = DEFAULT_JS_LAYERS
-}
+// if (C.VL === true) {
+//   DEFAULT_LAYERS = DEFAULT_VL_LAYERS
+// } else {
+//   DEFAULT_LAYERS = DEFAULT_JS_LAYERS
+// }
 
-export const layers = (state = DEFAULT_LAYERS, action) => {
+export const layers = (state = DEFAULT_VL_LAYERS, action) => {
   switch (action.type) {
     case actions.STORE_LAYERS:
-      console.log(action.layers)
       return action.layers;
 
     case actions.ADD_BRIDGE:
       Object.entries(action.layers).forEach(entry => {
         let bridge = entry[1].bridge
         bridge.build()
-        console.log(bridge)
+        console.log(entry)
       });
 
     case actions.ADD_LAYER:

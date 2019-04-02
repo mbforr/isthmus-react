@@ -30,7 +30,6 @@ class Header extends Component {
         <nav className="as-toolbar__actions">
           <ul>
             <HeaderLink name='Home' link='/' />
-            <HeaderLink name='Another Map' link='/page' />
             <HeaderLink name='Help' link='/help' />
           </ul>
         </nav>

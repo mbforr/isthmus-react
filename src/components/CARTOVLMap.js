@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import { storeLayers, setMap, setBboxFilter, changeViewport, changeCartoBBox, addBridge } from '../actions/actions';
-import vectorlayers from '../data/vectorlayers/VLindex';
+import vectorlayers from '../data/vectorlayers';
 import C from '../data/C'
 import '@carto/airship-style';
 import carto from '@carto/carto-vl'
@@ -29,14 +29,12 @@ class CARTOVLMap extends Component {
 
     const map = new mapboxgl.Map({
         container: 'map',
-        style: carto.basemaps.darkmatter,
+        style: carto.basemaps.voyager,
         center: [CENTER[1], CENTER[0]],
         zoom: ZOOM,
         hash: true,
         scrollZoom: false,
       });
-
-    // const map = L.map('map', { zoomControl: false, maxZoom: 18 }).setView(this.props.viewport.center, this.props.viewport.zoom);
 
     this.props.setMap(map);
 
@@ -50,12 +48,6 @@ class CARTOVLMap extends Component {
         username: USERNAME,
         apiKey: API_KEY
     })
-
-    console.log(map.getBounds())
-
-    // L.control.zoom({ position: 'bottomleft' }).addTo(map);
-
-    // this.popup = L.popup({ closeButton: false });
 
     map.on('moveend', event => {
       const boundingBox = event.target.getBounds();
@@ -96,7 +88,7 @@ class CARTOVLMap extends Component {
     //   if(options.featureClickColumns) {
     //     layer.on('featureClicked', this.openPopup.bind(this));
     //   }
-
+    console.log('BEFORE BRIDGE CALL')
     const bridge = new VLBridge({
       carto: carto,
       map: this.props.map,
@@ -107,19 +99,13 @@ class CARTOVLMap extends Component {
       return { ...all, [layerName]: { source, viz, layer, bridge, ...other } };
     }, {});
 
-    console.log('LAYERS: ', cartoLayers)
+    console.log(cartoLayers)
     this.props.storeLayers(cartoLayers) 
     setTimeout(() => {
       const { layers } = this.props
       this.props.addBridge(layers)
-    }, 4000)
+    }, 2000)
      
-  }
-
-  updateBriges() {
-    
-    console.log('LAYERS: ', layers)
-    
   }
 
   componentDidUpdate(prevProps) {
@@ -127,16 +113,6 @@ class CARTOVLMap extends Component {
       this.setupLayers();
     }
   }
-
-//   openPopup(featureEvent) {
-//     this.popup.setContent('');
-//     this.popup.setLatLng(featureEvent.latLng);
-
-//     if (!this.popup.isOpen()) {
-//       this.popup.openOn(this.props.map);
-//       render(<InfoWindow {...featureEvent.data} />, this.popup._contentNode);
-//     }
-//   }
 
   render() {
     const { layers } = this.props;
