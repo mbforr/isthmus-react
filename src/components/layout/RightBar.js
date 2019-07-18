@@ -6,9 +6,11 @@ import carto, { filter, source, style, layer  } from '@carto/carto.js';
 import Category from '.././widgets/Category'
 import CategoryVL from '.././vlwidgets/CategoryVL'
 import HistogramVL from '.././vlwidgets/HistogramVL'
+import RangeVL from '.././vlwidgets/RangeVL'
 import Formula from '.././widgets/Formula'
 import Range from '.././widgets/Range'
 import Export from '.././widgets/Export'
+import FormulaVL from '.././vlwidgets/FormulaVL'
 import '@carto/airship-style';
 
 class RightBar extends Component {
@@ -46,7 +48,24 @@ class RightBar extends Component {
         description='Total damage for each railroad company in USD'
         layer={this.props.layers.railaccidents}
         column='total_damage'
-        max={5}
+        totals={false}
+        max={25}
+      />
+      <RangeVL
+        title='adsfasdfaf'
+        description='afdasdfadsfasdf'
+        layer={this.props.layers.railaccidents}
+        column='total_damage'
+      />
+      <FormulaVL
+        title='Total Damage'
+        description='Maximum total damage in USD for accidents in view'
+        round={true}
+        currency={true}
+        locale='en-US'
+        currencyType='USD'
+        layer={this.props.layers.railaccidents}
+        feature={this.props.layers.railaccidents.viz.variables.v_avg.value}
       />
       </div>
       </aside>

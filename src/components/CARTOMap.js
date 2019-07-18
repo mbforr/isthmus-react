@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import L from 'leaflet';
-import carto, { filter, source, style, layer  } from '@carto/carto.js';
-import { connect } from 'react-redux';
+3import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { storeLayers, setMap, setBboxFilter, changeViewport, changeCartoBBox } from '../actions/actions';
 // import { Widgets, Legend, AirbnbPopup, MobileTabs } from '../components/components';

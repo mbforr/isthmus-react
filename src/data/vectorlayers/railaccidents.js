@@ -10,6 +10,7 @@ export default {
         strokeWidth: 0.5
         strokeColor: #191970
         @categories: viewportHistogram($railroad, 1, 12)
+        @v_avg: viewportAvg($total_damage)
     `,
   
     query: `

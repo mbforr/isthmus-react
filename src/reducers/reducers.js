@@ -10,7 +10,7 @@ import { VLBridge } from '@carto/airship-bridge'
 
 const carto = C.VL ? cartoVL : cartoJS
 
-// let cartoClient
+console.log(carto)
 
 // if (C.VL === true) {
 //   cartoClient = cartoVL.setDefaultAuth({
@@ -27,7 +27,7 @@ const carto = C.VL ? cartoVL : cartoJS
 
 // console.log(CC)
 
-cartoVL.setDefaultAuth({
+carto.setDefaultAuth({
   username: C.USERNAME,
   apiKey: C.API_KEY
 });

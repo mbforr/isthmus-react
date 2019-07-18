@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 // import carto from '@carto/carto-vl'
 import { addBridge } from '../../actions/actions';
 
-class HistogramVL extends Component {
+class RangeVL extends Component {
 
   static defaultProps = {
 
@@ -17,18 +17,14 @@ class HistogramVL extends Component {
     filter: null
   };
 
-  componentDidMount() {
-  }
-
-
   _setupBridge() {
-    this.props.layers.railaccidents.bridge.histogram(this.widget, 'total_damage', {
-      readOnly: false,
-      totals: this.props.totals,
-      buckets: this.props.max
-    });
+
+    this.widget.formatValue = this.widget.formatValue = (value) => `${value}° F`;
+
+    this.props.layers.railaccidents.bridge.globalRange(this.widget, 'temp');
 
     const { layers } = this.props
+
   }
 
   componentDidUpdate(prevProps) {
@@ -45,15 +41,16 @@ class HistogramVL extends Component {
 
     return (
     <div className="as-p--16">
-
-        <as-histogram-widget
-            ref={node => { this.widget = node; }}
-            heading={title}
-            description={description}
-            show-header
-            show-clear
-        />
-
+    <as-widget-header no-data-message="NO DATA AVAILABLE" class="hydrated">
+      <h2 className="as-widget-header__header">{title}</h2>
+      <p className="as-widget-header__subheader as-body">{description}</p>
+      <as-range-slider
+        ref={node => { this.widget = node; }}
+        step={5}
+        draggable={true}
+      >
+      </as-range-slider>
+    </as-widget-header>
     </div>
     );
   }
@@ -73,4 +70,4 @@ const mapDispatchToProps = dispatch => ({
     addBridge: layers => dispatch(addBridge(layers))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HistogramVL);
+export default connect(mapStateToProps, mapDispatchToProps)(RangeVL);

@@ -3,6 +3,8 @@ import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import LayerToggle from '../widgets/LayerToggle'
 import StyleToggle from '../widgets/StyleToggle'
+import ToggleVL from '.././vlwidgets/ToggleVL'
+
 import '@carto/airship-style';
 
 class Panel extends Component {
@@ -42,14 +44,17 @@ class Panel extends Component {
       <div className="as-map-panels" data-name={this.props.name}>
         <div className={this.state.position}>
           <div className={background}>
-            <LayerToggle
+            {/* <LayerToggle
               layer={this.props.layers.railaccidents}
             />
             <StyleToggle
               layer={this.props.layers.railaccidents}
               name='Change Points Style'
               cartocss={cartocss}
-            />
+            /> */}
+          <ToggleVL 
+            layer={this.props.layers.usstates}
+          />
           </div>
         </div>
       </div>

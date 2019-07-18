@@ -7,7 +7,7 @@ import carto from '@carto/carto-vl'
 import { addBridge } from '../../actions/actions';
 import { bridge } from '@carto/airship-bridge'
 
-import { defineCustomElements } from '@carto/airship-components/dist/loader';
+// import { defineCustomElements } from '@carto/airship-components/dist/loader';
 
 class CategoryVL extends Component {
 
@@ -60,14 +60,6 @@ class CategoryVL extends Component {
     // this.props.addBridge(this.props.layers)
 
   }
-
-
-  componentDidUpdate(prevProps) {
-    if (this.props.layers !== prevProps.layers) {
-      this._setupBridge()
-    }
-  }
-
 
   componentDidUpdate(prevProps) {
     if (this.props.layers !== prevProps.layers) {
