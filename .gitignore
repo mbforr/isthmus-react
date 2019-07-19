@@ -5,3 +5,8 @@
 
 jest.config.json
 yarn-error.log
+yarn.lock
+docker_notes.md
+Dockerfile
+package-lock.json
+stats.json
