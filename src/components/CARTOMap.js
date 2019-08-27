@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { storeLayers, setMap, setBboxFilter, changeViewport, changeCartoBBox } from '../actions/actions';
 // import { Widgets, Legend, AirbnbPopup, MobileTabs } from '../components/components';
 import InfoWindow from '../components/InfoWindow'
+import StoresInfoWindow from '../components/StoresInfoWindow'
 import layers from '../data/layers';
 import C from '../data/C'
 import '@carto/airship-style';
@@ -37,6 +38,7 @@ class CARTOMap extends Component {
     // L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
     this.popup = L.popup({ closeButton: false });
+    this.popupStores = L.popup({ closeButton: false });
 
     // this.setBbbox(map.getBounds());
 
@@ -78,7 +80,16 @@ class CARTOMap extends Component {
         layer.on('featureClicked', this.openPopup.bind(this));
       }
 
+      if(options.featureClickColumns && layerName === 'stores') {
+        console.log(layerName)
+        layer.on('featureClicked', this.openPopupStores.bind(this));
+      }
+
       this.props.client.getLeafletLayer().addTo(this.props.map);
+
+      if (other.visible === false) {
+        layer.hide()
+      }
 
       return { ...all, [layerName]: { source, style, layer, ...other } };
     }, {});
@@ -105,8 +116,18 @@ class CARTOMap extends Component {
     if (!this.popup.isOpen()) {
       this.popup.openOn(this.props.map);
       render(<InfoWindow {...featureEvent.data} />, this.popup._contentNode);
-    }
-  }
+      }
+    }  
+    
+    openPopupStores(featureEvent) {
+      this.popupStores.setContent('');
+      this.popupStores.setLatLng(featureEvent.latLng);
+  
+      if (!this.popupStores.isOpen()) {
+        this.popupStores.openOn(this.props.map);
+        render(<StoresInfoWindow {...featureEvent.data} />, this.popupStores._contentNode);
+        }
+      }  
 
   render() {
     const { layers } = this.props;
