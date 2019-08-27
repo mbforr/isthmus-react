@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import { storeLayers, setMap, setBboxFilter, changeViewport, changeCartoBBox } from '../actions/actions';
 // import { Widgets, Legend, AirbnbPopup, MobileTabs } from '../components/components';
 import InfoWindow from '../components/InfoWindow'
-import StoresInfoWindow from '../components/StoresInfoWindow'
 import layers from '../data/layers';
 import C from '../data/C'
 import '@carto/airship-style';
@@ -38,7 +37,6 @@ class CARTOMap extends Component {
     // L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
     this.popup = L.popup({ closeButton: false });
-    this.popupStores = L.popup({ closeButton: false });
 
     // this.setBbbox(map.getBounds());
 
@@ -118,16 +116,6 @@ class CARTOMap extends Component {
       render(<InfoWindow {...featureEvent.data} />, this.popup._contentNode);
       }
     }  
-    
-    openPopupStores(featureEvent) {
-      this.popupStores.setContent('');
-      this.popupStores.setLatLng(featureEvent.latLng);
-  
-      if (!this.popupStores.isOpen()) {
-        this.popupStores.openOn(this.props.map);
-        render(<StoresInfoWindow {...featureEvent.data} />, this.popupStores._contentNode);
-        }
-      }  
 
   render() {
     const { layers } = this.props;
