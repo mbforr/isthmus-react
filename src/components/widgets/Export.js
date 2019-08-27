@@ -20,7 +20,7 @@ class Export extends Component {
   exportData() {
     const query = this.props.layer._getQueryToApply()
     console.log(query)
-    let url = `${SQL_API_URL}${query}&format=${this.props.format}&filename=${this.props.filename}.${this.props.format}&api_key=${API_KEY}`
+    let url = `${SQL_API_URL}q=${query}&format=${this.props.format}&filename=${this.props.filename}.${this.props.format}&api_key=${API_KEY}`
     console.log(url)
     window.open(url)
   }
@@ -28,8 +28,8 @@ class Export extends Component {
   render() {
 
     return (
-      <button className="as-btn as-btn--primary as-btn--l" onClick={this.exportData}>
-        <i aria-hidden className="as-icon-arrow-down"></i>
+      <button className="as-btn as-btn--secondary" onClick={this.exportData}>
+        <i aria-hidden className="as-icon as-icon-arrow-down"></i>
         <p>{this.props.name}</p>
       </button>
     );

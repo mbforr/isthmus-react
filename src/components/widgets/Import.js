@@ -122,7 +122,7 @@ class Import extends Component {
       alert = <div className="as-p--16">
               <div className="as-flag">
               <div className="as-flag__icon">
-                <i style={{color: '#80B622'}} class="as-icon-alert-fill"></i>
+                <i style={{color: '#80B622'}} className="as-icon-alert-fill"></i>
               </div>
               <div className="as-flag__content">
                 <h4 className="as-body as-color--type-01">Import successful</h4>
@@ -130,7 +130,7 @@ class Import extends Component {
               </div>
               <div className="as-flag__icon">
                 <button className="as-flag__button" onClick={this.toggleHidden}>
-                  <i style={{color: '#1785FB'}} className="as-icon-close"></i>
+                  <i style={{color: '#1785FB'}} className="as-icon as-icon-close"></i>
                 </button>
               </div>
             </div>
@@ -139,7 +139,7 @@ class Import extends Component {
       alert = <div className="as-p--16">
               <div className="as-flag">
               <div className="as-flag__icon">
-                <i style={{color: '#F3522B'}} class="as-icon-alert-fill"></i>
+                <i style={{color: '#F3522B'}} class="as-icon as-icon-alert-fill"></i>
               </div>
               <div className="as-flag__content">
                 <h4 className="as-body as-color--type-01">Error on import</h4>
@@ -148,7 +148,7 @@ class Import extends Component {
               </div>
               <div className="as-flag__icon">
                 <button className="as-flag__button" onClick={this.toggleHidden}>
-                  <i style={{color: '#1785FB'}} className="as-icon-close"></i>
+                  <i style={{color: '#1785FB'}} className="as-icon as-icon-close"></i>
                 </button>
               </div>
             </div>
@@ -167,7 +167,7 @@ class Import extends Component {
         </div>
         <div className="as-p--8">
         <label className="fileContainer">
-            <i aria-hidden className="as-icon-arrow-up"> </i>
+            <i className="as-icon as-icon-arrow-up"> </i>
             {!fileName ? '  Import' : `  ${fileName}`}
             <input type="file" name="selectedFile" onChange={this.onChange}/>
         </label>

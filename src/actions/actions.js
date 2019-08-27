@@ -42,5 +42,3 @@ export const toggleLayer = name => ({
   name,
 });
 
-export const TOGGLE_THEME = '@Theme/TOGGLE';
-export const toggleTheme = active => ({ type: TOGGLE_THEME, active });
