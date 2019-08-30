@@ -1,59 +1,26 @@
-import React, { Component } from 'react';
-import { render } from 'react-dom';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
 import '@carto/airship-style';
 
-class Avatar extends Component {
+const Avatar = ({ size, icon, alt }) => {
+    const [finalSize, setFinalSize] = useState(null)
 
-  constructor(props) {
-    super(props);
-      this.state = {
-        ...props
-      }
-  }
+        let avatarSize
+        if (size === 'l' || size === 'xl') {
+            avatarSize = `as-avatar as-avatar--${size}`
+        } else {
+            avatarSize = `as-avatar`
+        }
 
-  state = {
-    size: null
-  };
-
-  componentDidMount() {
-    const { size } = this.props;
-    let avatarSize
-    if (size === 'l' || size === 'xl') {
-      avatarSize = `as-avatar as-avatar--${size}`
-    } else {
-      avatarSize = `as-avatar`
-    }
+    // setFinalSize(avatarSize)
 
 
-    this.setState({ size: avatarSize })
-  }
-
-  render() {
-
-    const { alt, icon } = this.props;
-
-    return (
-      <img
-        className={this.state.size}
+return (
+    <img
+        className={avatarSize}
         src={icon}
         alt={alt}
-      >
-      </img>
-    );
-  }
-
+    >
+    </img>      
+)
 }
-
-const mapStateToProps = state => ({
-  client: state.client,
-  map: state.map,
-  filters: state.filters,
-  layers: state.layers,
-  viewport: state.viewport,
-  boundingbox: state.boundingbox
-});
-
-const mapDispatchToProps = dispatch => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Avatar);
+export default Avatar;

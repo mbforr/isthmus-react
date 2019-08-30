@@ -1,45 +1,42 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
-import { setNeighbourhoods } from '../../actions/actions';
-import carto, { filter, source, style, layer  } from '@carto/carto.js';
+import { operation } from '@carto/carto.js';
 import '@carto/airship-style';
 import Formula from '../widgets/Formula'
+import Table from '../widgets/Table'
 
-class BottomBar extends Component {
+const BottomBar = ({ background, layers, name }) => {
 
-  constructor(props) {
-    super(props);
-      this.state = {
-        ...props
-      }
-  }
+  const backgroundFinal = `as-map-footer ${background}`
 
-  render() {
-
-    const background = `as-map-footer ${this.props.background}`
-
-    return (
-      <footer className={background} data-name={this.props.name}>
-        <div className="as-container as-container--scrollable">
-          <section className="as-box as-box--large">
-            <Formula
-              title='Total Damage'
-              description='Maximum total damage in USD for accidents in view'
-              round={false}
-              currency={true}
-              locale='es-ES'
-              currencyType='EUR'
-              layer={this.props.layers.railaccidents.source}
-              column='total_damage'
-              operation={carto.operation.MAX}
-            />
-          </section>
+  return (
+    <footer className={backgroundFinal} data-name={name}>
+      <div className="as-box">
+          <Formula
+            title='Total Damage'
+            description='Maximum total damage in USD for accidents in view'
+            round={false}
+            currency={true}
+            locale='es-ES'
+            currencyType='EUR'
+            layer={layers.railaccidents.source}
+            column='total_damage'
+            operation={operation.MAX}
+          />
         </div>
-      </footer>
-    )
-  }
+        <div className="as-box--scroll">
+          <Table 
+            query={'SELECT railroad, weather, total_damage, temp FROM rail_accidents'}
+            useMapBounds={true}
+            useLimit={20}
+            headers={['Railroad', 'Weather', 'Damage', 'Temprature']}
+          />
+        </div>
+    </footer>
+  )
 }
+
 
 const mapStateToProps = state => ({
   client: state.client,
@@ -49,8 +46,4 @@ const mapStateToProps = state => ({
   boundingbox: state.boundingbox
 });
 
-const mapDispatchToProps = dispatch => ({
-  setNeighbourhoods: selected => dispatch(setNeighbourhoods(selected)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(BottomBar);
+export default connect(mapStateToProps)(BottomBar);

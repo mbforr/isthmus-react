@@ -1,135 +1,89 @@
-import React from 'react';
-import { Component } from 'react';
+import React, { useState, useEffect,  useRef } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import '@carto/airship-style';
 import carto from '@carto/carto.js';
 
-class Dropdown extends Component {
 
-  static defaultProps = {
-    showHeader: true,
-    showClearButton: true,
-    useTotalPercentage: false,
-    visibleCategories: Infinity,
-  };
+const Dropdown = ({ categoryLayer, column, operation, operationColumn, client, placeholder }) => {
 
-  state = {
-    options: [
-    { text: 'All', value: 'all' },
-    { text: 'Open', value: 'open' },
-    { text: 'Unfulfilled', value: 'unfulfilled' },
-    { text: 'Unpaid', value: 'unpaid' }
-    ],
-    selection: [],
-    filter: null
-  };
+const widget = useRef(null)
+
+const [cats, setCategories] = useState([])
+const [selected, setSelected] = useState(null)
+const [cartoFilter, setCartoFilter] = useState(null)
 
 
-  componentDidMount() {
-    this.setupDropdown();
-  }
- //
- //  // componentDidUpdate() {
- //  //   this._setupConfig();
- //  // }
- //
- //  componentDidUpdate(prevProps) {
- //    this._setupConfig();
- //    const bboxFilter = new carto.filter.BoundingBoxLeaflet(this.props.map)
- //    // this.dataView.addFilter(this.props.boundingbox);
- //    // this.dataView.on('dataChanged', this.onDataChanged);
- //
- //    if(prevProps !== this.props) {
- //      this.dataView.addFilter(this.props.boundingbox);
- //    }
- //
- //  }
- //
-  setupDropdown() {
-    const { options } = this.state;
-    this.widget.options = options;
-    this.widget.canClear = true
-  }
- //  _addDataview() {
- //    this.dataView = new carto.dataview.Category(this.props.categoryLayer, this.props.column, {
- //      limit: 10,
- //      operation: this.props.operation,
- //      operationColumn: this.props.operationColumn
- //    });
- //
- //    this.dataView.on('dataChanged', ({ categories }) => this.setState({ categories }));
- //
- //    this.props.client.addDataview(this.dataView);
- // }
- //
- //  _createFilter() {
- //    const filter = new carto.filter.Category(this.props.column, { in: this.state.selection });
- //    this.props.categoryLayer.addFilter(filter);
- //    this.setState({  filter });
- //  }
- //
- //  _updateFilter() {
- //    this.filter.setFilters({ in: this.state.selection });
- //  }
- //
- //  onSelectedChanged = ({ detail }) => {
- //    let { filter } = this.state;
- //
- //    if (filter && !detail.length) {
- //      this.props.categoryLayer.removeFilter(filter);
- //      filter = null;
- //    }
- //
- //    this.setState({ selection: detail, filter });
- //  }
- //
- //  onApplySelection = () => {
- //    const { filter, selection } = this.state;
- //
- //    selection.length > 0 && !filter
- //      ? this._createFilter()
- //      : this._updateFilter();
- //  }
- //
- //  _onSelectedChanged(event) {
- //    const { onSelectedChanged } = this;
- //    onSelectedChanged && onSelectedChanged(event);
- //  }
- //
- //  _setupEvents() {
- //    this.widget.addEventListener('categoriesSelected', event => this._onSelectedChanged(event));
- //  }
+useEffect(() => {
+
+  widget.current.options = cats;
+
+  widget.current.defaultText = placeholder
+  widget.current.showClearButton = true;
+  setSelected(widget.current.selectedOption)
+
+  widget.current.addEventListener('optionChanged', (e) => {
+    setSelected(e.detail)
+  })
+}, [cats])
 
 
-  render() {
-    // const { title, description } = this.props;
-    const { options } = this.state;
+useEffect(() => {
 
-    return (
-      <div className="as-p--16">
-      <as-dropdown
-        ref={node => { this.widget = node; }}
-        default-text="Select Option"
-        can-clear="true">
+  const dataView = new carto.dataview.Category(categoryLayer, column, {
+    limit: 10,
+    operation: operation,
+    operationColumn: operationColumn
+  });
 
-      </as-dropdown>
-      </div>
-    );
-  }
+  dataView.on('dataChanged', ({ categories }) => {
+    setCategories(categories.map((value) => {
+      const val = {"text": value.name, "value": value.name}
+      return val
+    }))
+    
+  });
+
+  client.addDataview(dataView);
+  console.log(cats)
+}, [])
+
+const addFilter = () => {
+  const filter = new carto.filter.Category(column, { eq:  selected  });
+  categoryLayer.addFilter(filter);
+  setCartoFilter(filter)
+}
+
+const removeFilter = () => {
+  categoryLayer.removeFilter(cartoFilter);
+  setCartoFilter(null)
+}
+
+
+useEffect(() => {
+  
+  !selected ? removeFilter() : addFilter() 
+
+}, [selected])
+
+
+
+return (
+  <div className="as-p--16">
+  <as-dropdown
+    ref={widget}
+  >    
+  </as-dropdown>
+  </div>    
+)
 
 }
 
 const mapStateToProps = state => ({
   client: state.client,
   map: state.map,
-  filters: state.filters,
   layers: state.layers,
   viewport: state.viewport,
   boundingbox: state.boundingbox
 });
 
-const mapDispatchToProps = dispatch => ({
-  setNeighbourhoods: selected => dispatch(setNeighbourhoods(selected)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Dropdown);
+export default connect(mapStateToProps)(Dropdown);
