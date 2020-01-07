@@ -1,45 +1,36 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
-import { setNeighbourhoods } from '../../actions/actions';
-import carto, { filter, source, style, layer  } from '@carto/carto.js';
+import { operation } from '@carto/carto.js';
 import '@carto/airship-style';
 import Formula from '../widgets/Formula'
+import Category from '../widgets/Category'
+import Histogram from '../widgets/Histogram'
 
-class BottomBar extends Component {
+import Table from '../widgets/Table'
+import { min } from 'gl-matrix/src/gl-matrix/vec2';
 
-  constructor(props) {
-    super(props);
-      this.state = {
-        ...props
-      }
-  }
+const BottomBar = ({ background, layers, name }) => {
 
-  render() {
+  const backgroundFinal = `as-map-footer ${background}`
 
-    const background = `as-map-footer ${this.props.background}`
-
-    return (
-      <footer className={background} data-name={this.props.name}>
-        <div className="as-container as-container--scrollable">
-          <section className="as-box as-box--large">
-            <Formula
-              title='Total Damage'
-              description='Maximum total damage in USD for accidents in view'
-              round={false}
-              currency={true}
-              locale='es-ES'
-              currencyType='EUR'
-              layer={this.props.layers.railaccidents.source}
-              column='total_damage'
-              operation={carto.operation.MAX}
-            />
-          </section>
+  return (
+    <footer className={backgroundFinal} data-name={name}>
+      <div className="as-box">
+        
+        <div className="as-box--scroll">
+          <Table 
+            query={`SELECT location_name, address, CONCAT(median_dwell, ' min.'), raw_visit_counts, raw_visitor_counts FROM acreage_data_samples_safegraph_sample_2_422`}
+            useMapBounds={true}
+            useLimit={15}
+            headers={['Location', 'Address', 'Avg. Dwell', 'Visits', 'Visitors']}
+          />
         </div>
-      </footer>
-    )
-  }
+      </div>
+    </footer>
+  )
 }
+
 
 const mapStateToProps = state => ({
   client: state.client,
@@ -49,8 +40,4 @@ const mapStateToProps = state => ({
   boundingbox: state.boundingbox
 });
 
-const mapDispatchToProps = dispatch => ({
-  setNeighbourhoods: selected => dispatch(setNeighbourhoods(selected)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(BottomBar);
+export default connect(mapStateToProps)(BottomBar);

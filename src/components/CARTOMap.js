@@ -74,11 +74,20 @@ class CARTOMap extends Component {
       const style = new carto.style.CartoCSS(other.cartocss);
       const layer = new carto.layer.Layer(source, style, options);
 
-      if(options.featureClickColumns) {
-        layer.on('featureClicked', this.openPopup.bind(this));
-      }
+      // if(options.featureClickColumns) {
+      //   layer.on('featureClicked', this.openPopup.bind(this));
+      // }
+
+      // if(options.featureClickColumns && layerName === 'stores') {
+      //   console.log(layerName)
+      //   layer.on('featureClicked', this.openPopupStores.bind(this));
+      // }
 
       this.props.client.getLeafletLayer().addTo(this.props.map);
+
+      if (other.visible === false) {
+        layer.hide()
+      }
 
       return { ...all, [layerName]: { source, style, layer, ...other } };
     }, {});
@@ -105,8 +114,8 @@ class CARTOMap extends Component {
     if (!this.popup.isOpen()) {
       this.popup.openOn(this.props.map);
       render(<InfoWindow {...featureEvent.data} />, this.popup._contentNode);
-    }
-  }
+      }
+    }  
 
   render() {
     const { layers } = this.props;

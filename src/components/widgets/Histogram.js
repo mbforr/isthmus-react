@@ -70,6 +70,7 @@ class Histogram extends Component {
    const min = range[0]
    const max = range[1]
    filter.setFilters({ between: { min, max } });
+   console.log(this.state.filter)
  }
 
  onApplySelection() {
@@ -82,11 +83,10 @@ class Histogram extends Component {
 
  onSelectedChanged = ({ detail }) => {
    let { filter } = this.state;
-   if (!detail.length) {
+   if (!detail) {
      this.props.layer.removeFilter(filter);
      filter = null;
      this.setState({ filter });
-     console.log('onSelectedChanged DID SOMETHING')
    }
  }
 
@@ -94,19 +94,25 @@ class Histogram extends Component {
    const { onSelectedChanged } = this;
    const { data } = this.state;
    onSelectedChanged && onSelectedChanged(event);
-   console.log(data, this.widget.data)
+  //  console.log(data, this.widget.data)
    //if (event.detail !== this.state.range) {
-    if (this.widget.data === data && event.detail === this.state.range) {
+  if (event.detail) {
+    if (this.widget.data === data && event.detail.selection === this.state.range) {
       console.log('DATA VALUE', data === this.widget.data)
-      console.log('RANGE VALUE', event.detail === this.state.range)
+      console.log('RANGE VALUE', event.detail.selection === this.state.range)
      this.onApplySelection()
    }
+  }
  }
 
   setupEvents() {
     let { range, filter } =  this.state;
     this.widget.addEventListener('selectionChanged', (event) => {
-      this.setState({ range: event.detail });
+      if (!event.detail) {
+        this.setState({ range: null });
+      } else {
+        this.setState({ range: event.detail.selection });
+      }
       this.completeUpdateRangeFilter(event)
     });
   }

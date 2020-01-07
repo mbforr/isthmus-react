@@ -19,10 +19,11 @@ class LayerToggle extends Component {
 
   setupConfig() {
     const { checked } = this.state;
-    this.widget.checked = checked
+    this.widget.checked = this.props.layer.visible
   }
 
   setupChecked() {
+    this.setState({ checked: this.props.layer.visible })
     this.widget.addEventListener('change', (event) => {
       this.setState({ checked: event.detail })
       if (event.detail === true) {
@@ -37,10 +38,7 @@ class LayerToggle extends Component {
     return (
       <div>
         <span className="as-display--block">
-          <p className="as-body">{this.props.layer.name}</p>
-        </span>
-        <span className="as-display--block">
-          <as-switch checked ref={node => { this.widget = node; }}></as-switch>
+          <as-switch checked ref={node => { this.widget = node; }} label={this.props.layer.name}></as-switch>
         </span>
       </div>
     );

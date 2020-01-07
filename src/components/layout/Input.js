@@ -1,33 +1,18 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import '@carto/airship-style';
 
-class Input extends Component {
-
-  constructor(props) {
-    super(props);
-      this.state = {
-        ...props
-      }
-  }
-
-  render() {
-
-    const { id, required } = this.props;
-
-    return (
-      <div className="as-p--16">
-        <input
-          className="as-input"
-          id={id}
-          type="text"
-          placeholder={this.props.placeholder}
-          ></input>
-      </div>
-    );
-  }
-
+const Input = ({ id, placeholder }) => {
+  return (
+    <div className="as-p--16">
+      <input
+        className="as-input"
+        id={id}
+        type="text"
+        placeholder={placeholder}
+        ></input>
+    </div>
+  )
 }
 
 const mapStateToProps = state => ({
@@ -39,6 +24,5 @@ const mapStateToProps = state => ({
   boundingbox: state.boundingbox
 });
 
-const mapDispatchToProps = dispatch => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Input);
+export default connect(mapStateToProps)(Input);
