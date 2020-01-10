@@ -74,9 +74,14 @@ class CARTOMap extends Component {
       const style = new carto.style.CartoCSS(other.cartocss);
       const layer = new carto.layer.Layer(source, style, options);
 
-      if(options.featureClickColumns) {
-        layer.on('featureClicked', this.openPopup.bind(this));
-      }
+      // if(options.featureClickColumns) {
+      //   layer.on('featureClicked', this.openPopup.bind(this));
+      // }
+
+      // if(options.featureClickColumns && layerName === 'stores') {
+      //   console.log(layerName)
+      //   layer.on('featureClicked', this.openPopupStores.bind(this));
+      // }
 
       if(options.featureClickColumns && layerName === 'stores') {
         console.log(layerName)

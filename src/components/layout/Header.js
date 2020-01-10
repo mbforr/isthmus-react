@@ -16,6 +16,7 @@ const Header = () => {
           icon="https://blobscdn.gitbook.com/v0/b/gitbook-28427.appspot.com/o/spaces%2F-LNBHPmcyIcNeWf3W50m%2Favatar.png?generation=1537815172519034&alt=media"
         />
       </div>
+      </div>
       <nav className="as-toolbar__actions">
         <ul>
           <HeaderLink name='Home' link='/' />

@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import '@carto/airship-style';
 
 const Input = ({ id, required }) => {
+
+const Input = ({ id, placeholder }) => {
   return (
     <div className="as-p--16">
       <input
         className="as-input"
         id={id}
         type="text"
-        placeholder={this.props.placeholder}
+        placeholder={placeholder}
         ></input>
     </div>
   )

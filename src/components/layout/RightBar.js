@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { connect } from 'react-redux';
 import { operation } from '@carto/carto.js';
 import Category from '.././widgets/Category'
@@ -7,6 +7,7 @@ import Formula from '.././widgets/Formula'
 import Range from '.././widgets/Range'
 import Export from '.././widgets/Export'
 import '@carto/airship-style';
+import { set } from 'gl-matrix/src/gl-matrix/mat2d';
 
 const RightBar = ({ layers, size, background, name }) => {
   const z = `as-sidebar as-sidebar--${size} as-sidebar--right ${background}`;
@@ -65,7 +66,6 @@ const RightBar = ({ layers, size, background, name }) => {
     </aside>
 
   )
-}
 
 const mapStateToProps = state => ({
   client: state.client,
