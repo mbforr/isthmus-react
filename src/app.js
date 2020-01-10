@@ -5,6 +5,10 @@ import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
+// import '@carto/airship-components/dist/loader';
+
+// defineCustomElements(window);
+
 
 const store  = configureStore();
 

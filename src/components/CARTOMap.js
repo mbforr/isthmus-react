@@ -83,6 +83,11 @@ class CARTOMap extends Component {
       //   layer.on('featureClicked', this.openPopupStores.bind(this));
       // }
 
+      if(options.featureClickColumns && layerName === 'stores') {
+        console.log(layerName)
+        layer.on('featureClicked', this.openPopupStores.bind(this));
+      }
+
       this.props.client.getLeafletLayer().addTo(this.props.map);
 
       if (other.visible === false) {

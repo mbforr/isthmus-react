@@ -17,12 +17,12 @@ const Page = () => (
         <main className="as-main">
           <div className="as-map-area">
             <CARTOMap />
-            {/* <Panel
+            <Panel
               vertical='top'
               horizontal='left'
               background=''
               name='Controls'
-            /> */}
+            />
           </div>
           <BottomBar
             background=''
@@ -34,11 +34,11 @@ const Page = () => (
           background=''
           name='Right'
         />
-        {/* <LeftBar
+        <LeftBar
           size='s'
           background=''
           name='Left'
-        /> */}
+        />
       </div>
     </body>
   </as-responsive-content>
