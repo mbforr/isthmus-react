@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import '@carto/airship-style';
 
-const Input = ({ id, required }) => {
 
 const Input = ({ id, placeholder }) => {
   return (

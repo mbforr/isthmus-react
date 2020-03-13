@@ -65,7 +65,7 @@ const RightBar = ({ layers, size, background, name }) => {
     </div>
     </aside>
 
-  )
+  )}
 
 const mapStateToProps = state => ({
   client: state.client,

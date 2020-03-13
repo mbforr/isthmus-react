@@ -24,7 +24,6 @@ const Header = () => {
           <HeaderLink name='Help' link='/help' />
         </ul>
       </nav>
-    </div>
 
     <div className="as-toolbar__item as-body">
       <i className="as-icon as-icon-settings as-subheader as-m--0"></i>

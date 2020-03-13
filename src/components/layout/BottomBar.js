@@ -45,7 +45,6 @@ const BottomBar = ({ background, layers, name }) => {
             headers={['Location', 'Address', 'Avg. Dwell', 'Visits', 'Visitors']}
           />
         </div>
-      </div>
     </footer>
   )
 }
